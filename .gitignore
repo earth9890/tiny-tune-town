@@ -1,0 +1,17 @@
+# big / regenerable
+**/renders/
+**/assets/*.wav
+**/assets/*.mp3
+**/snapshots/
+**/.hyperframes/
+**/node_modules/
+*.pyc
+__pycache__/
+.DS_Store
+# rejected ACE-Step takes (the chosen one is copied to assets/voice.wav) and local caches
+**/takes/
+.cache/
+*_prev.html
+**/*.nobadge.png
+# third-party thumbnails studied for research: copyrighted, keep local only
+research/*/thumbs/
