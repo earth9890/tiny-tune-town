@@ -13,5 +13,3 @@ __pycache__/
 .cache/
 *_prev.html
 **/*.nobadge.png
-# third-party thumbnails studied for research: copyrighted, keep local only
-research/*/thumbs/
