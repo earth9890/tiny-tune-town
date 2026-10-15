@@ -1,0 +1,39 @@
+◆  Capturing 25 frames at [2.5s, 8.5s, 13s, 17.5s, 22.5s, 27.5s, 32s, 38s, 47s, 56s, 62s, 71s, 80s, 86s, 95s, 103s, 108s, 113s, 119s, 124s, 128s, 135s, 145s, 155s, 166s] from 17-tidy-up
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)")
+
+   Fonts: 1 loaded, 1 unused
+   Note: added an end-of-timeline frame at 164.90s. Short beats between your --at times may still be skipped — pass them explicitly.
+   Revision: none (inputs-changed)
+   State: /Users/harish/videos/tiny-tune-town/songs/17-tidy-up/.hyperframes/video-state.json
+
+◇  26 snapshots saved to /Users/harish/videos/tiny-tune-town/songs/17-tidy-up/.hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-00-at-2.5s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-01-at-8.5s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-02-at-13s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-03-at-17.5s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-04-at-22.5s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-05-at-27.5s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-06-at-32s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-07-at-38s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-08-at-47s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-09-at-56s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-10-at-62s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-11-at-71s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-12-at-80s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-13-at-86s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-14-at-95s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-15-at-103s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-16-at-108s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-17-at-113s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-18-at-119s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-19-at-124s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-20-at-128s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-21-at-135s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-22-at-145s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-23-at-155s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-24-at-166s.png
+   .hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/frame-25-at-164.9s.png
+   /Users/harish/videos/tiny-tune-town/songs/17-tidy-up/.hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/contact-sheet-1.jpg (grid view for AI review)
+   /Users/harish/videos/tiny-tune-town/songs/17-tidy-up/.hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/contact-sheet-2.jpg (grid view for AI review)
+   /Users/harish/videos/tiny-tune-town/songs/17-tidy-up/.hyperframes/artifacts/snapshots/f0eac680-af67-4c89-8d78-fc3005fd43b4/contact-sheet-3.jpg (grid view for AI review)
+done

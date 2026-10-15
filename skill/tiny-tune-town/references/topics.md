@@ -32,7 +32,7 @@
 | # | Song | Type and BPM | Slot / story |
 |---|---|---|---|
 | 1 | **Humpty Dumpty** (PD 1797) | story ~98 | verse 4x unchanged; friends bandage, glue and hug Humpty together again |
-| 2 | **Itsy Bitsy Spider** (PD 1910) | routine ~96 | the weather: rain, wind, snow, sun → rainbow |
+| 2 | **Itsy Bitsy Spider** (PD: 1910 "Spider Song" in A. W. North, Camp and Camino in Lower California; water-spout wording ~1912) | routine ~96 | the weather: rain, wind, snow, sun → rainbow |
 | 3 | **Hickory Dickory Dock** (PD 1744) | action ~116 | hour + animal: 1 mouse, 2 bird, 3 frog… (counting + sounds) |
 | 4 | **Mary Had a Little Lamb** (PD 1830) | story ~98 | the lamb follows Ollie to the park, the shop, the bath |
 | 5 | **The Muffin Man** (PD 1820) | action ~116 | the treat: muffin, bun, pie, bread |

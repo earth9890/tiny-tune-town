@@ -43,7 +43,7 @@ python3 tools/song_lint.py songs/<slug>/song.md                                 
 # listen check: 16 kHz mono copy -> whisper-cli -m ~/.cache/hyperframes/whisper/models/ggml-small.en.bin -oj
 python3 S/scripts/scene_lint.py songs/<slug>/scenes.js && python3 S/scripts/build.py songs/<slug> && (cd songs/<slug> && npx hyperframes check)
 python3 S/scripts/build.py songs/<slug> --thumb thumbnails/thumb-a.js thumbnails/a.png && tools/badge.sh songs/<slug>/thumbnails/a.png
-S/scripts/finish.sh songs/<slug> none songs/<slug>/renders/<slug>-4k.mp4         # 4K render
+S/scripts/finish.sh songs/<slug> none ~/videos/tiny-tune-town/songs/<slug>/renders/<slug>-4k.mp4   # 4K render; the OUT path must be absolute (a relative one lands inside the song folder)
 ```
 Brand files: `T/brand/` (`avatar.png` 800², `banner.jpg` 2560×1440, `badge.png`, sources `avatar.js`, `banner.js`).
 Channel: Tiny Tune Town, `UCXhTeJrWZsvgJioIpbaKg0A`, https://www.youtube.com/@TinyTuneTownSings.

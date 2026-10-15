@@ -1,6 +1,7 @@
 // Tiny Tune Town cast + sets: shared by every song. Use in scenes.js / thumb-*.js right under `// look: still`:
 //   // @include ../../tools/cast.js        (from songs/<slug>/; from thumbnails/ use ../../../tools/cast.js)
-// Ollie = channel hero (pink octopus, logo). Friends: fish(), crab(), star(), turtle(). Sets: sea(), coral(), weed(), rock(), shell(), bubbles().
+// Ollie = channel hero (pink octopus, logo; .grin() toothy smile, .face = close-up centre). Friends: bibi() bunny, fish(), crab(), star(), turtle().
+// Sets: sea(), coral(), weed(), rock(), shell(), bubbles(); home: DS.room(S, BATH_ROOM), bathWall(), bathSink(), tapWater(), foam(). Helpers: popIn, swing, cap.
 let BEAT = 60 / 110; // songs set their own tempo after the include: BEAT = 60 / 96;
 const cut = (c, i = 0) => W(c, i) - 0.35;
 const wave = (n) => (p) => Math.sin(p * Math.PI * 2 * n);          // rest → +1 → -1 → rest, n times
@@ -55,7 +56,13 @@ const ollie = (S, cx, gy, k = 1, o = {}) => {
   const open = G(S, body); open.setAttribute("opacity", 0);
   S.draw("M-36 -266 Q0 -196 36 -266 Z", s0, 0, { c: DS.line(), w: DS.w.near, fill: DS.c("red", 2), parent: open });
   S.fill(circ(0, -228, 15, 8), s0, 0, DS.c("pink", 1), 1, open);
+  const grin = G(S, body); grin.setAttribute("opacity", 0); // big toothy smile (teeth songs, finales)
+  S.draw("M-82 -282 Q0 -150 82 -282 Z", s0, 0, { c: DS.line(), w: DS.w.near, fill: DS.c("red", 2), parent: grin });
+  S.fill(circ(0, -214, 26, 12), s0, 0, DS.c("pink", 1), 1, grin);
+  S.draw("M-74 -279 Q0 -236 74 -279 L68 -262 Q0 -218 -68 -262 Z", s0, 0, { c: DS.c("gray", 1), w: DS.w.hair, fill: DS.P.white[0], parent: grin });
+  [-48, -24, 0, 24, 48].forEach((x) => S.draw(`M${x} ${-268 + Math.abs(x) * 0.1} V${-238 + Math.abs(x) * 0.33}`, s0, 0, { c: DS.c("gray", 1), w: DS.w.hair, parent: grin }));
   if (o.mouth === "open") { open.setAttribute("opacity", 1); smile.setAttribute("opacity", 0); }
+  if (o.mouth === "grin") { grin.setAttribute("opacity", 1); smile.setAttribute("opacity", 0); }
   if (t > s0 + 0.05) { fadeIn(S, pos, t); fadeIn(S, sh, t); }
   const all = COUNT.map(([ai, s]) => arms[ai + "," + s]);
   const O = { pos, lift, bob, size, body, arms: all, k, cx, gy, liftY: 0, sz: 1,
@@ -69,6 +76,19 @@ const ollie = (S, cx, gy, k = 1, o = {}) => {
   O.hop = (t0, h = 60, dur = 0.5) => tw(lift, t0, dur, `translate(0 ${O.liftY})`, `translate(0 ${O.liftY - h})`, hump(1));
   O.spin = (t0, dur = 1.3, turns = 1) => tw(body, t0, dur, "rotate(0 0 -250)", `rotate(${360 * turns} 0 -250)`, "power1.inOut");
   O.scale = (z, t0, dur = 0.5) => { tw(size, t0, dur, `scale(${O.sz})`, `scale(${z})`, "back.out(1.4)"); O.sz = z; };
+  O.grin = (t0, t1 = 1e9) => { tl.set(grin, { opacity: 1 }, t0); tl.set(smile, { opacity: 0 }, t0); if (t1 < 1e9) { tl.set(grin, { opacity: 0 }, t1); tl.set(smile, { opacity: 1 }, t1); } };
+  O.face = [cx, gy - 330 * k]; // centre of the face, for camera close-ups: S.zoom(...O.face, 2.4, t)
+  // aim arm A so its tip lands at height ty (body units, e.g. -262 = mouth) beside the face; returns the tip [x, y] in body units.
+  // The tip sweeps a circle around the arm's root, so it lands outside the face. Pass t0 to swing it there over dur.
+  O.holdAt = (A, ty, t0 = s0, dur = 0.01) => {
+    const tx0 = A.tip[0] - A.x, ty0 = A.tip[1] - A.y, L = Math.hypot(tx0, ty0), dy = ty - A.y;
+    const dx = Math.sqrt(Math.max(0, L * L - dy * dy)) * (A.side === 1 ? -1 : 1);
+    let r = (Math.atan2(dy, dx) - Math.atan2(ty0, tx0)) * 180 / Math.PI; r = ((r + 540) % 360) - 180;
+    O.raise(A, r * A.side, t0, dur); return [A.x + dx, ty];
+  };
+  // where arm A's tip is now (after raise/holdAt), in body units; o = how far past the tip to extend (for props held up in the air)
+  O.tipNow = (A, ext = 0) => { const r = A.cur * Math.PI / 180, dx = A.tip[0] - A.x, dy = A.tip[1] - A.y, m = Math.hypot(dx, dy), f = (m + ext) / m;
+    return [A.x + (dx * Math.cos(r) - dy * Math.sin(r)) * f, A.y + (dx * Math.sin(r) + dy * Math.cos(r)) * f]; };
   O.sing = (t0, t1) => { tl.set(open, { opacity: 1 }, t0); tl.set(smile, { opacity: 0 }, t0); tl.set(open, { opacity: 0 }, t1); tl.set(smile, { opacity: 1 }, t1); };
   return O;
 };
@@ -171,3 +191,87 @@ const hearts = (S, t, list) => list.forEach(([x, y, s], i) => { const g = G(S, n
 const glow = (S, t) => S.fill(circ(960, -40, 620, 420), t, 0.35, DS.glow(DS.P.yellow[1], 0.75), 1);
 
 
+
+
+// ---------- home and bathroom set (from 04 Bubble Hands) ----------
+const K = (v) => +v.toFixed(1);
+const cap = (x1, y1, x2, y2, r) => { const a = Math.atan2(y2 - y1, x2 - x1), nx = -Math.sin(a) * r, ny = Math.cos(a) * r; return `M${K(x1 + nx)} ${K(y1 + ny)} L${K(x2 + nx)} ${K(y2 + ny)} A${r} ${r} 0 0 0 ${K(x2 - nx)} ${K(y2 - ny)} L${K(x1 - nx)} ${K(y1 - ny)} A${r} ${r} 0 0 0 ${K(x1 + nx)} ${K(y1 + ny)} Z`; };
+const BATH_ROOM = { wall: "glass", floor: "sand", window: false };   // DS.room(S, BATH_ROOM)
+// gentle on-the-beat sway (yoyo, ends where it started)
+const swing = (S, e, t0, t1, props, per = BEAT) => { const n = Math.floor((t1 - t0) / per); if (n >= 2) S.move(e, t0, per, Object.assign({ yoyo: true, repeat: 2 * Math.floor(n / 2) - 1 }, props), "sine.inOut"); };
+// pops in calmly on its word; returns [outer (free to drift), inner]
+const popIn = (S, t, x, y, parent) => { const o = S.grp(parent), g = S.grp(o); if (t > S.start + 0.05) popAt(g, t, x, y); return [o, g]; };
+const foam = (S, x, y, n, t, parent) => { const [, g] = popIn(S, t, x, y, parent);
+  for (let i = 0; i < n; i++) { const a = i * 2.4, d = 14 + (i % 4) * 12; S.draw(circ(x + Math.cos(a) * d * 1.6, y + Math.sin(a) * d, 16 + (i % 3) * 7), S.start, 0, { fill: DS.P.white[0], c: DS.c("sky", 2), w: DS.w.hair, parent: g }); }
+  return g; };
+const tiles = (S, x0, y0, x1, y1, step = 80) => { let d = ""; for (let x = x0 + step; x < x1; x += step) d += `M${x} ${y0} V${y1} `; for (let y = y0 + step; y < y1; y += step) d += `M${x0} ${y} H${x1} `; S.draw(d, S.start, 0, { c: DS.c("sky", 0, "mid"), w: DS.w.hair, op: 0.7 }); };
+const bathWall = (S, o = {}) => {
+  tiles(S, 360, 90, 1560, 760);
+  DS.shape(S, rrect(400, 340, 260, 22, DS.r.xs), "white", { layer: "mid", w: "mid" });                                     // shelf
+  DS.shape(S, circ(470, 304, 42, 32), "yellow", { layer: "mid", w: "mid" }); DS.shape(S, circ(500, 262, 25), "yellow", { layer: "mid", w: "mid" }); // duck
+  DS.shape(S, `M520 258 L552 266 L520 276 Z`, "orange", { layer: "mid", w: "detail" }); S.fill(circ(506, 255, 5), S.start, 0, DS.c("ink"), 1);
+  DS.shape(S, rrect(580, 270, 56, 70, DS.r.sm), "sky", { layer: "mid", w: "mid" });                                         // cup
+  [[596, "red"], [620, "grass"]].forEach(([x, c]) => DS.shape(S, rrect(x - 6, 220, 12, 60, DS.r.xs), c, { layer: "mid", w: "detail" }));
+  if (o.towel === false) return;
+  S.draw(circ(1380, 280, 40), S.start, 0, { c: DS.c("gray", 0, "mid"), w: DS.w.mid });                                     // towel ring + towel
+  DS.shape(S, rrect(1310, 310, 140, 210, DS.r.sm), "grass", { layer: "mid", w: "mid" });
+  S.draw("M1310 470 H1450 M1310 486 H1450", S.start, 0, { c: DS.P.white[0], w: DS.w.detail });
+};
+const bathSink = (S, o = {}) => {
+  DS.shape(S, rect(330, 772, 1260, 420), "wood", { dir: "v" });
+  S.draw("M960 790 V1100", S.start, 0, { c: DS.c("wood", 2), w: DS.w.mid });
+  [920, 1000].forEach((x) => DS.shape(S, circ(x, 860, 13), "gold", { w: "detail" }));
+  DS.shape(S, rrect(280, 712, 1360, 66, DS.r.sm), "white");
+  S.draw(circ(960, 740, 290, 22), S.start, 0, { fill: DS.c("glass", 2), c: DS.line(), w: DS.w.detail });
+  DS.shape(S, rrect(1270, 590, 44, 132, DS.r.sm), "gray");                                                                   // faucet
+  DS.shape(S, cap(1292, 612, 1180, 612, 18), "gray"); DS.shape(S, rrect(1160, 600, 38, 46, DS.r.xs), "gray", { w: "mid" });
+  DS.shape(S, rrect(1258, 562, 68, 30, DS.r.sm), "sky", { w: "mid" });
+};
+const tapWater = (S, t, x = 1179, y0 = 646, y1 = 744) => { const [, g] = popIn(S, t, x, y0); S.fill(rrect(x - 15, y0, 30, y1 - y0, DS.r.sm), S.start, 0, DS.c("sky", 0), 0.85, g); S.fill(rrect(x - 5, y0 + 6, 8, y1 - y0 - 16, DS.r.xs), S.start, 0, DS.P.white[0], 0.8, g); return g; };
+
+// ---------- Bibi: Ollie's best friend, a round pink bunny with a yellow bow (from 04 Bubble Hands) ----------
+const bibiFace = (S, x, y, k, mood, g) => {
+  [-1, 1].forEach((s) => {
+    if (mood === "joy") S.draw(arc(x + s * 46 * k, y + 2 * k, 20 * k, 200, 340), S.start, 0, { c: DS.c("ink"), w: DS.w.near, parent: g });
+    else { S.fill(circ(x + s * 46 * k, y - 6 * k, 20 * k, 26 * k), S.start, 0, DS.c("ink"), 1, g); S.fill(circ(x + s * 46 * k + 7 * k, y - 15 * k, 7 * k), S.start, 0, DS.P.white[0], 1, g); }
+    S.fill(circ(x + s * 82 * k, y + 30 * k, 22 * k, 14 * k), S.start, 0, DS.c("red", 1), 0.45, g);
+  });
+  S.fill(circ(x, y + 24 * k, 12 * k, 9 * k), S.start, 0, DS.c("pink", 2), 1, g);
+  S.draw(`M${K(x - 30 * k)} ${K(y + 46 * k)} Q${K(x)} ${K(y + 104 * k)} ${K(x + 30 * k)} ${K(y + 46 * k)} Z`, S.start, 0, { fill: DS.c("red", 2), c: DS.c("ink"), w: DS.w.detail, parent: g });
+  S.fill(circ(x, y + 64 * k, 13 * k, 7 * k), S.start, 0, DS.c("pink", 1), 1, g);
+};
+// an arm + paw from Bibi's shoulder to (px, py); returns its group (rotate it about g.sh to wave)
+const bibiArm = (S, B, side, px, py, t) => { const [g, in_] = popIn(S, t ?? S.start, px, py, B.g), k = B.k, sx = B.x + side * 82 * k, sy = B.hy + 150 * k;
+  DS.shape(S, cap(sx, sy, px, py, 30 * k), "pink", { parent: in_ });
+  DS.shape(S, circ(px, py, 46 * k, 42 * k), "pink", { parent: in_ });
+  [-1, 1].forEach((s) => S.draw(`M${K(px + s * 16 * k)} ${K(py + 18 * k)} V${K(py + 38 * k)}`, S.start, 0, { c: DS.c("ink"), w: DS.w.detail, parent: in_ }));
+  g.sh = `${K(sx)} ${K(sy)}`; return g; };
+// x = centre, hy = head centre y; o: { k, mood: "joy", paws: [[lx, ly], [rx, ry]] (null = no arm) }
+const bibi = (S, x, hy, o = {}) => {
+  const k = o.k || 1, g = S.grp(), B = { g, k, x, hy };
+  [[-1, -12], [1, 10]].forEach(([s, rot]) => { const eg = S.grp(g), ex = x + s * 56 * k, ey = hy - 150 * k; eg.setAttribute("transform", `rotate(${rot} ${K(ex)} ${K(ey + 90 * k)})`);
+    DS.shape(S, circ(ex, ey, 36 * k, 98 * k), "pink", { parent: eg }); S.fill(circ(ex, ey + 10 * k, 16 * k, 66 * k), S.start, 0, DS.c("pink", 2), 0.7, eg); });
+  DS.shape(S, circ(x, hy + 200 * k, 130 * k, 125 * k), "pink", { parent: g });
+  S.fill(circ(x, hy + 222 * k, 80 * k, 84 * k), S.start, 0, DS.P.white[0], 0.8, g);
+  DS.shape(S, circ(x, hy, 128 * k, 114 * k), "pink", { parent: g });
+  bibiFace(S, x, hy, k, o.mood, g);
+  const bx = x + 70 * k, by = hy - 104 * k; // yellow bow = Bibi's signature
+  [-1, 1].forEach((s) => DS.shape(S, `M${K(bx)} ${K(by)} L${K(bx + s * 46 * k)} ${K(by - 26 * k)} Q${K(bx + s * 58 * k)} ${K(by)} ${K(bx + s * 46 * k)} ${K(by + 26 * k)} Z`, "yellow", { parent: g, w: "mid" }));
+  DS.shape(S, circ(bx, by, 13 * k), "yellow", { parent: g, w: "mid" });
+  const [l, r] = o.paws || [[x - 110 * k, hy + 290 * k], [x + 110 * k, hy + 290 * k]];
+  if (l) B.L = bibiArm(S, B, -1, l[0], l[1]);
+  if (r) B.R = bibiArm(S, B, 1, r[0], r[1]);
+  return B;
+};
+
+// ---------- props ----------
+// toothbrush: handle from (x0, y0) (where it is held) to the bristle head at (x1, y1); o: { c: colour, foam: true, parent }
+const toothbrush = (S, x0, y0, x1, y1, o = {}) => {
+  const g = S.grp(o.parent), a = Math.atan2(y1 - y0, x1 - x0), ux = Math.cos(a), uy = Math.sin(a), nx = -uy, ny = ux;
+  DS.shape(S, cap(x0, y0, x1 - ux * 34, y1 - uy * 34, 11), o.c || "sky", { parent: g, w: "mid" });
+  DS.shape(S, cap(x1 - ux * 40, y1 - uy * 40, x1, y1, 13), "white", { parent: g, w: "detail" });
+  const bx = x1 - ux * 20 - nx * 14, by = y1 - uy * 20 - ny * 14;      // bristles stick out on one side
+  DS.shape(S, `M${K(x1 - ux * 40 - nx * 10)} ${K(y1 - uy * 40 - ny * 10)} L${K(x1 - nx * 10)} ${K(y1 - ny * 10)} L${K(x1 - nx * 34)} ${K(y1 - ny * 34)} L${K(x1 - ux * 40 - nx * 34)} ${K(y1 - uy * 40 - ny * 34)} Z`, "glass", { parent: g, w: "detail" });
+  if (o.foam !== false) [[0, 0, 15], [-16, -8, 11], [14, -10, 10], [4, -22, 9]].forEach(([dx, dy, r]) => S.draw(circ(bx + dx - nx * 18, by + dy - ny * 18, r), S.start, 0, { fill: DS.P.white[0], c: DS.c("sky", 2), w: DS.w.hair, parent: g }));
+  return g;
+};

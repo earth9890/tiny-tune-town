@@ -1,0 +1,82 @@
+built /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/index.html  total=170.0s theme=light audio=assets/voice.wav
+◆  Checking 13-one-little-bite
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)")
+
+Lint
+  ⚠ composition_file_too_large: This HTML composition file has 1642 lines. Smaller sub-compositions are easier to read, iterate on, and diff.
+    /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/index.html [data-composition-id] t=0s
+    Fix: Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently.
+  0 error(s), 1 warning(s), 0 info(s)
+
+Runtime
+  ◇ 0 errors, 0 warnings
+
+Layout
+  ⚠ t=9.444, 28.333, 47.222, 66.111, 85, 103.889, 122.778, 141.667, 160.556s container_overflow #board inside #stage overflowed left 428px, right 668px, top 422px, bottom 422px — Element extends outside a clipping layout container.
+        Fix: Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.
+  0 error(s), 1 warning(s), 0 info(s)
+
+Motion
+  ◇ 0 errors, 0 warnings
+
+Contrast
+  ◇ 10/10 text checks pass WCAG AA
+
+Snapshots
+  ◇ disabled
+
+◇  Check passed
+Report: /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/.hyperframes/artifacts/checks/dc5b6728-4e48-422d-ad10-020116bf9b7d.json
+Revision: none (inputs-changed)
+◆  Capturing 35 frames at [3.5s, 7.8s, 11.2s, 15.5s, 20.4s, 24.5s, 29.5s, 34.5s, 39.5s, 44.9s, 50.5s, 55.3s, 60s, 67.5s, 72.5s, 77.5s, 82.9s, 86.5s, 92s, 96.5s, 101.6s, 105s, 112.5s, 117s, 121.5s, 126s, 130s, 135s, 139.9s, 144.5s, 148.5s, 154.6s, 160s, 166s, 169s] from 13-one-little-bite
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)")
+
+   Fonts: 1 loaded, 1 unused
+   Note: added an end-of-timeline frame at 164.90s. Short beats between your --at times may still be skipped — pass them explicitly.
+   Revision: none (inputs-changed)
+   State: /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/.hyperframes/video-state.json
+
+◇  36 snapshots saved to /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/.hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-00-at-3.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-01-at-7.8s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-02-at-11.2s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-03-at-15.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-04-at-20.4s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-05-at-24.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-06-at-29.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-07-at-34.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-08-at-39.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-09-at-44.9s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-10-at-50.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-11-at-55.3s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-12-at-60s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-13-at-67.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-14-at-72.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-15-at-77.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-16-at-82.9s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-17-at-86.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-18-at-92s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-19-at-96.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-20-at-101.6s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-21-at-105s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-22-at-112.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-23-at-117s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-24-at-121.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-25-at-126s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-26-at-130s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-27-at-135s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-28-at-139.9s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-29-at-144.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-30-at-148.5s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-31-at-154.6s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-32-at-160s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-33-at-166s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-34-at-169s.png
+   .hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/frame-35-at-164.9s.png
+   /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/.hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/contact-sheet-1.jpg (grid view for AI review)
+   /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/.hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/contact-sheet-2.jpg (grid view for AI review)
+   /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/.hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/contact-sheet-3.jpg (grid view for AI review)
+   /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/.hyperframes/artifacts/snapshots/0525ab9e-a376-4048-a773-1ce357e01fe9/contact-sheet-4.jpg (grid view for AI review)
+thumbnail /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/thumbnails/a.png  theme=light
+thumbnail /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/thumbnails/b.png  theme=light
+QADONE

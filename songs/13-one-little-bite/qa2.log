@@ -1,0 +1,22 @@
+built /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/index.html  total=170.0s theme=light audio=assets/voice.wav
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)")
+  0 error(s), 1 warning(s), 0 info(s)
+  0 error(s), 1 warning(s), 0 info(s)
+◆  Capturing 4 frames at [11.2s, 72.5s, 92s, 126s] from 13-one-little-bite
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)")
+
+   Fonts: 1 loaded, 1 unused
+   Note: added an end-of-timeline frame at 164.90s. Short beats between your --at times may still be skipped — pass them explicitly.
+   Revision: none (inputs-changed)
+   State: /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/.hyperframes/video-state.json
+
+◇  5 snapshots saved to /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/.hyperframes/artifacts/snapshots/49cbc8d1-4d0b-46e9-96e3-d5b7167cf41a
+   .hyperframes/artifacts/snapshots/49cbc8d1-4d0b-46e9-96e3-d5b7167cf41a/frame-00-at-11.2s.png
+   .hyperframes/artifacts/snapshots/49cbc8d1-4d0b-46e9-96e3-d5b7167cf41a/frame-01-at-72.5s.png
+   .hyperframes/artifacts/snapshots/49cbc8d1-4d0b-46e9-96e3-d5b7167cf41a/frame-02-at-92s.png
+   .hyperframes/artifacts/snapshots/49cbc8d1-4d0b-46e9-96e3-d5b7167cf41a/frame-03-at-126s.png
+   .hyperframes/artifacts/snapshots/49cbc8d1-4d0b-46e9-96e3-d5b7167cf41a/frame-04-at-164.9s.png
+   /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/.hyperframes/artifacts/snapshots/49cbc8d1-4d0b-46e9-96e3-d5b7167cf41a/contact-sheet.jpg (grid view for AI review)
+thumbnail /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/thumbnails/a.png  theme=light
+thumbnail /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/thumbnails/b.png  theme=light
+QADONE

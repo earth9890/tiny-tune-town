@@ -1,0 +1,135 @@
+W1014 17:06:56.203000 36678 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+2026-10-14 17:06:57.914 | WARNING  | acestep.training.trainer:<module>:40 - bitsandbytes not installed. Using standard AdamW.
+2026-10-14 17:06:57.962 | INFO     | acestep.gpu_config:get_gpu_config:846 - macOS MPS detected (10.7 GB unified memory, tier=tier4). Applying Apple Silicon optimizations: no compile, no quantization, mlx backend, no CPU offload.
+2026-10-14 17:06:57.965 | INFO     | acestep.core.generation.handler.init_service_loader:_load_main_model_from_checkpoint:174 - [initialize_service] Attempting to load model with attention implementation: sdpa
+2026-10-14 17:07:16.598 | INFO     | acestep.core.generation.handler.init_service_loader:_load_main_model_from_checkpoint:200 - [initialize_service] Keeping main model on mps (persistent)
+2026-10-14 17:09:32.470 | INFO     | acestep.core.generation.handler.mlx_dit_init:_init_mlx_dit:34 - [MLX-DiT] Native MLX DiT decoder initialized successfully (mx.compile=False).
+2026-10-14 17:09:43.874 | INFO     | acestep.core.generation.handler.mlx_vae_init:_init_mlx_vae:75 - [MLX-VAE] Decode/encode compiled with mx.compile().
+2026-10-14 17:09:43.876 | INFO     | acestep.core.generation.handler.mlx_vae_init:_init_mlx_vae:85 - [MLX-VAE] Native MLX VAE initialized (dtype=mlx.core.float32, compiled=True).
+2026-10-14 17:09:43.889 | INFO     | acestep.inference:generate_music:662 - [generate_music] LLM usage decision: thinking=False, use_cot_caption=True, use_cot_language=True, use_cot_metas=True, need_lm_for_cot=True, llm_initialized=False, use_lm=False
+2026-10-14 17:09:43.897 | INFO     | acestep.core.generation.handler.generate_music:generate_music:313 - [generate_music] Turbo model detected: overriding guidance_scale 7.0 -> 1.0 (turbo does not use CFG).
+2026-10-14 17:09:43.897 | INFO     | acestep.core.generation.handler.generate_music:generate_music:329 - [generate_music] Starting generation...
+2026-10-14 17:09:43.897 | INFO     | acestep.core.generation.handler.generate_music:generate_music:332 - [generate_music] Preparing inputs...
+2026-10-14 17:09:52.884 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:41 - [_load_model_context] Loading vae to mps (RSS: 2654 MB)
+2026-10-14 17:09:54.956 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:58 - [_load_model_context] Loaded vae to mps in 0.5301s (RSS: 2654 -> 2654 MB, delta: +0 MB)
+2026-10-14 17:09:55.196 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:67 - [_load_model_context] Offloading vae to CPU (RSS: 2654 MB)
+2026-10-14 17:09:56.124 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:83 - [_load_model_context] Offloaded vae to CPU in 0.7992s (RSS: 2654 -> 2654 MB, delta: +0 MB)
+2026-10-14 17:09:56.232 | INFO     | acestep.core.generation.handler.conditioning_text:_prepare_text_conditioning_inputs:119 - 
+======================================================================
+2026-10-14 17:09:56.232 | INFO     | acestep.core.generation.handler.conditioning_text:_prepare_text_conditioning_inputs:120 - 🔍 [DEBUG] DiT TEXT ENCODER INPUT (Inference)
+2026-10-14 17:09:56.232 | INFO     | acestep.core.generation.handler.conditioning_text:_prepare_text_conditioning_inputs:121 - ======================================================================
+2026-10-14 17:09:56.232 | INFO     | acestep.core.generation.handler.conditioning_text:_prepare_text_conditioning_inputs:122 - text_prompt:
+# Instruction
+Fill the audio semantic mask based on the given conditions:
+
+# Caption
+bouncy action song for kids, cheerful children's nursery sing-along, warm clear young female kids-show lead singer, very clear diction, little vibrato, small happy kids choir on the last chorus, ukulele, hand claps, glockenspiel, light bass, small drums, simple repetitive sing-along melody, short instrumental breaks between verses, major key, happy, sunny, playful, clean bright mix
+
+# Metas
+- bpm: 116
+- timesignature: 4
+- keyscale: F Major
+- duration: 170 seconds
+<|endoftext|>
+
+2026-10-14 17:09:56.232 | INFO     | acestep.core.generation.handler.conditioning_text:_prepare_text_conditioning_inputs:123 - ======================================================================
+2026-10-14 17:09:56.232 | INFO     | acestep.core.generation.handler.conditioning_text:_prepare_text_conditioning_inputs:124 - lyrics_text:
+# Languages
+en
+
+# Lyric
+[intro]
+(Ooh! Something smells yummy!)
+
+[verse]
+Oh, do you know the muffin man,
+The muffin man, the muffin man?
+Oh, do you know the muffin man,
+Who lives on Drury Lane?
+
+[verse]
+Oh, yes, I know the muffin man,
+The muffin man, the muffin man,
+Oh, yes, I know the muffin man,
+Who lives on Drury Lane!
+
+[instrumental break]
+(Yum! What's next?)
+
+[verse]
+The muffin man bakes yummy buns,
+Yummy buns, yummy buns,
+The muffin man bakes yummy buns,
+Who lives on Drury Lane!
+
+[instrumental break]
+(Mmm! Catch it, Ollie!)
+
+[verse]
+The muffin man bakes apple pie,
+Apple pie, apple pie,
+The muffin man bakes apple pie,
+Who lives on Drury Lane!
+
+[instrumental break]
+(Whoa! Wobble wobble!)
+
+[verse]
+The muffin man bakes fresh warm bread,
+Fresh warm bread, fresh warm bread,
+The muffin man bakes fresh warm bread,
+Who lives on Drury Lane!
+
+[instrumental break]
+(Party time!)
+
+[chorus]
+Oh, do you know the muffin man,
+The muffin man, the muffin man?
+Oh, do you know the muffin man,
+Who lives on Drury Lane?
+Oh, yes, we know the muffin man,
+The muffin man, the muffin man,
+Oh, yes, we know the muffin man,
+Who lives on Drury Lane!
+Yum, yum, yum, thank you, muffin man!
+Yum, yum, yum, thank you, muffin man!
+
+[outro]
+(Bye-bye! Yum yum!)<|endoftext|>
+2026-10-14 17:09:56.232 | INFO     | acestep.core.generation.handler.conditioning_text:_prepare_text_conditioning_inputs:125 - ======================================================================
+
+2026-10-14 17:09:56.490 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:41 - [_load_model_context] Loading vae to mps (RSS: 2654 MB)
+2026-10-14 17:09:56.821 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:58 - [_load_model_context] Loaded vae to mps in 0.2134s (RSS: 2654 -> 2654 MB, delta: +0 MB)
+2026-10-14 17:09:56.835 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:67 - [_load_model_context] Offloading vae to CPU (RSS: 2654 MB)
+2026-10-14 17:09:57.278 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:83 - [_load_model_context] Offloaded vae to CPU in 0.3186s (RSS: 2654 -> 2654 MB, delta: +0 MB)
+2026-10-14 17:09:57.288 | INFO     | acestep.core.generation.handler.conditioning_embed:preprocess_batch:110 - [preprocess_batch] Inferring prompt embeddings...
+2026-10-14 17:09:57.288 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:41 - [_load_model_context] Loading text_encoder to mps (RSS: 2654 MB)
+2026-10-14 17:10:20.212 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:58 - [_load_model_context] Loaded text_encoder to mps in 22.6186s (RSS: 2654 -> 2654 MB, delta: +0 MB)
+2026-10-14 17:10:21.183 | INFO     | acestep.core.generation.handler.conditioning_embed:preprocess_batch:113 - [preprocess_batch] Inferring lyric embeddings...
+2026-10-14 17:10:21.191 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:67 - [_load_model_context] Offloading text_encoder to CPU (RSS: 2654 MB)
+2026-10-14 17:10:22.878 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:83 - [_load_model_context] Offloaded text_encoder to CPU in 1.2423s (RSS: 2654 -> 2654 MB, delta: +0 MB)
+2026-10-14 17:10:23.847 | INFO     | acestep.core.generation.handler.service_generate_execute:_execute_service_generate_diffusion:173 - [service_generate] Generating audio... (DiT backend: MLX (native))
+2026-10-14 17:10:46.305 | INFO     | acestep.models.mlx.dit_generate:mlx_generate_diffusion:410 - [MLX-DiT] DCW enabled (mode=double, scaler=0.050, high_scaler=0.020, wavelet=haar, backend=MLX-native Haar).
+Python(39907) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+('[OK] Model initialized successfully on mps\nMain model: /Users/harish/tools/ACE-Step-1.5/checkpoints/acestep-v15-turbo\nVAE: /Users/harish/tools/ACE-Step-1.5/checkpoints/vae\nText encoder: /Users/harish/tools/ACE-Step-1.5/checkpoints/Qwen3-Embedding-0.6B\nDtype: torch.float32\nAttention: sdpa\nCompiled: False\nQuantization: Disabled\nOffload to CPU: True\nOffload DiT to CPU: False\nMLX DiT: Active (native MLX)\nMLX VAE: Active (native MLX)', True)
+MLX DiT diffusion:   0%|          | 0/8 [00:00<?, ?it/s]MLX DiT diffusion:  12%|█▎        | 1/8 [01:14<08:42, 74.58s/it]MLX DiT diffusion:  25%|██▌       | 2/8 [02:09<06:18, 63.01s/it]MLX DiT diffusion:  38%|███▊      | 3/8 [03:12<05:15, 63.04s/it]MLX DiT diffusion:  50%|█████     | 4/8 [03:27<02:55, 43.95s/it]MLX DiT diffusion:  62%|██████▎   | 5/8 [03:35<01:33, 31.08s/it]MLX DiT diffusion:  75%|███████▌  | 6/8 [03:44<00:46, 23.47s/it]MLX DiT diffusion:  88%|████████▊ | 7/8 [03:53<00:18, 18.70s/it]MLX DiT diffusion: 100%|██████████| 8/8 [04:01<00:00, 15.56s/it]MLX DiT diffusion: 100%|██████████| 8/8 [04:01<00:00, 30.24s/it]
+2026-10-14 17:14:48.431 | INFO     | acestep.core.generation.handler.service_generate_execute:_execute_service_generate_diffusion:267 - [service_generate] DiT diffusion complete via MLX (242.05s total, 30.256s/step).
+2026-10-14 17:14:48.454 | INFO     | acestep.core.generation.handler.generate_music_decode:_prepare_generate_music_decode_state:42 - [generate_music] Model generation completed. Decoding latents...
+2026-10-14 17:14:48.469 | DEBUG    | acestep.core.generation.handler.generate_music_decode:_prepare_generate_music_decode_state:64 - [generate_music] pred_latents: torch.Size([1, 4250, 64]), dtype=torch.float32
+2026-10-14 17:14:48.469 | DEBUG    | acestep.core.generation.handler.generate_music_decode:_prepare_generate_music_decode_state:65 - [generate_music] time_costs: {'diffusion_time_cost': 242.04807209968567, 'diffusion_per_step_time_cost': 30.25600901246071, 'total_time_cost': 242.06780624389648, 'sampler_mode': 'euler', 'offload_time_cost': 25.722112894058228}
+2026-10-14 17:14:48.685 | INFO     | acestep.core.generation.handler.generate_music_decode:_decode_generate_music_pred_latents:127 - [generate_music] Decoding latents with VAE...
+2026-10-14 17:14:48.692 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:41 - [_load_model_context] Loading vae to mps (RSS: 2654 MB)
+2026-10-14 17:15:01.623 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:58 - [_load_model_context] Loaded vae to mps in 10.7035s (RSS: 2654 -> 2654 MB, delta: +0 MB)
+2026-10-14 17:15:01.700 | DEBUG    | acestep.core.generation.handler.generate_music_decode:_decode_generate_music_pred_latents:136 - [generate_music] Before VAE decode: allocated=0.00GB, max=0.00GB
+2026-10-14 17:15:01.701 | INFO     | acestep.core.generation.handler.generate_music_decode:_decode_generate_music_pred_latents:172 - [generate_music] Using tiled VAE decode to reduce VRAM usage...
+2026-10-14 17:16:35.790 | INFO     | acestep.core.generation.handler.mlx_vae_decode_native:_mlx_vae_decode:66 - [MLX-VAE] Decoded 1 sample(s), 4250 latent frames -> audio in 94.09s (convert=0.022s, decode=94.06s, dtype=mlx.core.float32)
+2026-10-14 17:16:35.806 | DEBUG    | acestep.core.generation.handler.generate_music_decode:_decode_generate_music_pred_latents:193 - [generate_music] After VAE decode: allocated=0.00GB, max=0.00GB
+2026-10-14 17:16:35.848 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:67 - [_load_model_context] Offloading vae to CPU (RSS: 2654 MB)
+2026-10-14 17:16:36.769 | INFO     | acestep.core.generation.handler.init_service_offload_context:_load_model_context:83 - [_load_model_context] Offloaded vae to CPU in 0.7036s (RSS: 2654 -> 2654 MB, delta: +0 MB)
+2026-10-14 17:16:36.877 | INFO     | acestep.core.generation.handler.generate_music_payload:_build_generate_music_success_payload:38 - [generate_music] VAE decode completed. Preparing audio tensors...
+2026-10-14 17:16:36.878 | INFO     | acestep.core.generation.handler.generate_music_payload:_build_generate_music_success_payload:50 - [generate_music] Done! Generated 1 audio tensors.
+2026-10-14 17:16:37.062 | INFO     | acestep.inference:generate_music:1002 - [Normalization] Audio 0 BEFORE: Peak=1.0000, Target=-1.0dB
+2026-10-14 17:16:37.202 | INFO     | acestep.inference:generate_music:1007 - [Normalization] Audio 0 AFTER: Peak=0.8913
+2026-10-14 17:16:37.652 | DEBUG    | acestep.audio_utils:save_audio:319 - [AudioSaver] Saved audio to /Users/harish/videos/tiny-tune-town/songs/11-muffin-man/takes/bc3f1b84-eec2-e6ce-5104-b062b6ea89b3.wav (wav, 48000Hz)
+wrote /Users/harish/videos/tiny-tune-town/songs/11-muffin-man/takes/take-21-1.wav

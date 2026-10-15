@@ -1,0 +1,11 @@
+thumbnail /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/thumbnails/a.png  theme=light
+thumbnail /Users/harish/videos/tiny-tune-town/songs/13-one-little-bite/thumbnails/b.png  theme=light
+
+thumbnails/a.png
+  PASS  3 words: Tiny Tune Town
+  FAIL  text height 0.06 of frame: hits use 0.16-0.24 (Kurzgesagt 0.167, Zenn 0.24)
+  INFO  no stakes word (NO, NEVER, LOST, ILLEGAL, DEADLY...): on HAI they raised the hit rate 5.3x
+  PASS  clutter (edges) 0.200: keep <= 0.25, flops ran 0.30-0.42
+  INFO  palette #fafad8 #d8fafa #fad8b7  lum 0.77  sat 0.22  contrast 0.23
+  GRID  thumbnails/a_grid.jpg  <- READ it: is yours the one the eye lands on?
+QADONE

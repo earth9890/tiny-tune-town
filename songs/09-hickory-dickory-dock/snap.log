@@ -1,0 +1,44 @@
+built /Users/harish/videos/tiny-tune-town/songs/09-hickory-dickory-dock/index.html  total=170.0s theme=light audio=assets/voice.wav
+◆  Checking 09-hickory-dickory-dock
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)")
+
+Lint
+  ⚠ composition_file_too_large: This HTML composition file has 1658 lines. Smaller sub-compositions are easier to read, iterate on, and diff.
+    /Users/harish/videos/tiny-tune-town/songs/09-hickory-dickory-dock/index.html [data-composition-id] t=0s
+    Fix: Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently.
+  0 error(s), 1 warning(s), 0 info(s)
+
+Runtime
+  ◇ 0 errors, 0 warnings
+
+Layout
+  ⚠ t=9.444, 28.333, 47.222, 66.111, 85, 103.889, 122.778, 141.667, 160.556s container_overflow #board inside #stage overflowed left 827px, right 849px, top 621.85px, bottom 592.15px — Element extends outside a clipping layout container.
+        Fix: Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.
+  0 error(s), 1 warning(s), 0 info(s)
+
+Motion
+  ◇ 0 errors, 0 warnings
+
+Contrast
+  ◇ 6/6 text checks pass WCAG AA
+
+Snapshots
+  ◇ disabled
+
+◇  Check passed
+Report: /Users/harish/videos/tiny-tune-town/songs/09-hickory-dickory-dock/.hyperframes/artifacts/checks/d7475fa2-ca67-45cc-b29b-42921b353319.json
+Revision: none (inputs-changed)
+◆  Capturing 3 frames at [131.8s, 134.6s, 140.5s] from 09-hickory-dickory-dock
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)")
+
+   Fonts: 1 loaded, 1 unused
+   Note: added an end-of-timeline frame at 164.90s. Short beats between your --at times may still be skipped — pass them explicitly.
+   Revision: none (inputs-changed)
+   State: /Users/harish/videos/tiny-tune-town/songs/09-hickory-dickory-dock/.hyperframes/video-state.json
+
+◇  4 snapshots saved to /Users/harish/videos/tiny-tune-town/songs/09-hickory-dickory-dock/.hyperframes/artifacts/snapshots/b8d87653-7113-4b29-a1d0-e58f16f127b8
+   .hyperframes/artifacts/snapshots/b8d87653-7113-4b29-a1d0-e58f16f127b8/frame-00-at-131.8s.png
+   .hyperframes/artifacts/snapshots/b8d87653-7113-4b29-a1d0-e58f16f127b8/frame-01-at-134.6s.png
+   .hyperframes/artifacts/snapshots/b8d87653-7113-4b29-a1d0-e58f16f127b8/frame-02-at-140.5s.png
+   .hyperframes/artifacts/snapshots/b8d87653-7113-4b29-a1d0-e58f16f127b8/frame-03-at-164.9s.png
+   /Users/harish/videos/tiny-tune-town/songs/09-hickory-dickory-dock/.hyperframes/artifacts/snapshots/b8d87653-7113-4b29-a1d0-e58f16f127b8/contact-sheet.jpg (grid view for AI review)

@@ -1,0 +1,19 @@
+built /Users/harish/videos/tiny-tune-town/songs/14-boo-boo-all-better/index.html  total=170.0s theme=light audio=assets/voice.wav
+◆  Checking 14-boo-boo-all-better
+  0 error(s), 1 warning(s), 0 info(s)
+  ◇ 0 errors, 0 warnings
+  0 error(s), 1 warning(s), 0 info(s)
+  ◇ 0 errors, 0 warnings
+◇  Check passed
+   .hyperframes/artifacts/snapshots/0b31d51b-5314-44e6-91d2-3f3805da168a/frame-04-at-164.9s.png
+   /Users/harish/videos/tiny-tune-town/songs/14-boo-boo-all-better/.hyperframes/artifacts/snapshots/0b31d51b-5314-44e6-91d2-3f3805da168a/contact-sheet.jpg (grid view for AI review)
+thumbnail /Users/harish/videos/tiny-tune-town/songs/14-boo-boo-all-better/thumbnails/b.png  theme=light
+
+thumbnails/a.png
+  PASS  2 words: ALL / BETTER!
+  PASS  text height 0.20 of frame
+  INFO  no stakes word (NO, NEVER, LOST, ILLEGAL, DEADLY...): on HAI they raised the hit rate 5.3x
+  PASS  clutter (edges) 0.195: keep <= 0.25, flops ran 0.30-0.42
+  INFO  palette #95d8fa #73b773 #b7d8fa  lum 0.66  sat 0.33  contrast 0.21
+  GRID  thumbnails/a_grid.jpg  <- READ it: is yours the one the eye lands on?
+exit 0

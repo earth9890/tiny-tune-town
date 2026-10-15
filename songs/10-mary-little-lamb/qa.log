@@ -1,0 +1,16 @@
+built /Users/harish/videos/tiny-tune-town/songs/10-mary-little-lamb/index.html  total=156.0s theme=light audio=assets/voice.wav
+  0 error(s), 1 warning(s), 0 info(s)
+  0 error(s), 1 warning(s), 0 info(s)
+◇  Check passed
+   /Users/harish/videos/tiny-tune-town/songs/10-mary-little-lamb/.hyperframes/artifacts/snapshots/e92b80cc-0560-4a98-817b-d5dee60ec780/contact-sheet-1.jpg (grid view for AI review)
+   /Users/harish/videos/tiny-tune-town/songs/10-mary-little-lamb/.hyperframes/artifacts/snapshots/e92b80cc-0560-4a98-817b-d5dee60ec780/contact-sheet-2.jpg (grid view for AI review)
+thumbnail /Users/harish/videos/tiny-tune-town/songs/10-mary-little-lamb/thumbnails/a.png  theme=light
+thumbnail /Users/harish/videos/tiny-tune-town/songs/10-mary-little-lamb/thumbnails/b.png  theme=light
+
+songs/10-mary-little-lamb/thumbnails/a.png
+  WARN  5 words (FOLLOW ME! / Tiny Tune Town): 4-5 words were 2.4x more common in flops; cut to 1-3
+  PASS  text height 0.17 of frame
+  INFO  no stakes word (NO, NEVER, LOST, ILLEGAL, DEADLY...): on HAI they raised the hit rate 5.3x
+  PASS  clutter (edges) 0.235: keep <= 0.25, flops ran 0.30-0.42
+  INFO  palette #95d8fa #b7d8fa #fafafa  lum 0.66  sat 0.29  contrast 0.25
+  GRID  songs/10-mary-little-lamb/thumbnails/a_grid.jpg  <- READ it: is yours the one the eye lands on?

@@ -1,0 +1,15 @@
+built /Users/harish/videos/tiny-tune-town/songs/11-muffin-man/index.html  total=170.0s theme=light audio=assets/voice.wav
+◆  Checking 11-muffin-man
+  0 error(s), 2 warning(s), 0 info(s)
+  0 error(s), 1 warning(s), 0 info(s)
+  ◇ 16/16 text checks pass WCAG AA
+◇  Check passed
+   /Users/harish/videos/tiny-tune-town/songs/11-muffin-man/.hyperframes/artifacts/snapshots/5f72dcf0-a6e7-4441-8d6d-1bc8983bfbb3/contact-sheet.jpg (grid view for AI review)
+
+thumbnails/a.png
+  WARN  4 words (YUM! / Tiny Tune Town): 4-5 words were 2.4x more common in flops; cut to 1-3
+  PASS  text height 0.22 of frame
+  INFO  no stakes word (NO, NEVER, LOST, ILLEGAL, DEADLY...): on HAI they raised the hit rate 5.3x
+  PASS  clutter (edges) 0.244: keep <= 0.25, flops ran 0.30-0.42
+  INFO  palette #fafad8 #fad8b7 #fafab7  lum 0.71  sat 0.28  contrast 0.25
+  GRID  thumbnails/a_grid.jpg  <- READ it: is yours the one the eye lands on?

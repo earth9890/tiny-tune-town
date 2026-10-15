@@ -1,0 +1,12 @@
+◆  Capturing 1 frames at [15.5s] from 17-tidy-up
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)")
+
+   Fonts: 1 loaded, 1 unused
+   Note: added an end-of-timeline frame at 164.90s. Short beats between your --at times may still be skipped — pass them explicitly.
+   Revision: none (inputs-changed)
+   State: /Users/harish/videos/tiny-tune-town/songs/17-tidy-up/.hyperframes/video-state.json
+
+◇  2 snapshots saved to /Users/harish/videos/tiny-tune-town/songs/17-tidy-up/.hyperframes/artifacts/snapshots/74757853-8ee5-4057-912b-f08bcc8a7b09
+   .hyperframes/artifacts/snapshots/74757853-8ee5-4057-912b-f08bcc8a7b09/frame-00-at-15.5s.png
+   .hyperframes/artifacts/snapshots/74757853-8ee5-4057-912b-f08bcc8a7b09/frame-01-at-164.9s.png
+   /Users/harish/videos/tiny-tune-town/songs/17-tidy-up/.hyperframes/artifacts/snapshots/74757853-8ee5-4057-912b-f08bcc8a7b09/contact-sheet.jpg (grid view for AI review)

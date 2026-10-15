@@ -12,9 +12,11 @@ The big channels feel rich because the camera keeps changing *size*: a wide set-
 ## 1. The cast (`T/tools/cast.js`)
 | Character | Role | Status |
 |---|---|---|
-| **Ollie**, a pink octopus with big eyes and 8 arms | Hero of every video, logo, thumbnails. The running visual joke: he uses all 8 arms at once (brushing 8 teeth, holding 8 snacks, waving 8 hellos) | in `cast.js`: `ollie(S, cx, groundY, k, {mouth, look})` with `.wiggle .raise .bob .hop .spin .scale .sing`, plus `.at([x,y])` for the face position |
+| **Ollie**, a pink octopus with big eyes and 8 arms | Hero of every video, logo, thumbnails. The running visual joke: he uses all 8 arms at once (brushing 8 teeth, holding 8 snacks, waving 8 hellos) | in `cast.js`: `ollie(S, cx, groundY, k, {mouth: "open"|"grin", look})` with `.wiggle .raise .bob .hop .spin .scale .sing .grin`, `.holdAt(A, y)` (aims an arm so its tip sits beside the face at height y, for holding things to the mouth), `.tipNow(A, ext)` (where a raised arm's tip is), `.at([x,y])`, `.face` |
 | fish, crab, star, turtle | Sea friends, guests | in `cast.js` |
-| **Bibi** (bunny, from 04 Bubble Hands) | Best friend for land, home and routine songs | **to move into `cast.js`** from `songs/04-bubble-hands/scenes.js` |
+| **Bibi** (pink bunny, yellow bow) | Best friend for land, home and routine songs | in `cast.js`: `bibi(S, x, headY, {k, mood: "joy", paws: [[lx,ly],[rx,ry]]})` with `.g .L .R` (arm groups, rotate about `.sh` to wave) |
+| Bathroom set | sink scenes (teeth, hands, bath) | `DS.room(S, BATH_ROOM)`, `bathWall`, `bathSink` (draw it **after** Ollie so he stands behind the counter), `tapWater`, `foam` |
+| Props | | `toothbrush(S, x0, y0, x1, y1, {c, parent})` |
 | Grown-ups | Kind, present parent figure (for routine songs) | to design once, then add to `cast.js` |
 Rules:
 - New characters are added to `cast.js` (never redefined per song), with the same build in every scene and thumbnail.
@@ -67,4 +69,7 @@ Write a **shot list** before any code: one row per 6–8 s, with the framing and
 ## 7. Engine notes
 - `S.zoom(x, y, k, t, dur, ease)` pushes the content layer onto (x, y); `k = 1` returns. It is seek-safe and stacks with the scene's slow drift (`cam: "push"`; use `cam: "none"` when you drive zooms yourself).
 - `// @include ../../tools/cast.js` must come **right after** `// look: still` (the look line has to be in the first 300 characters). Thumbnails live one folder deeper: `../../../tools/cast.js`.
-- Reference builds: `songs/01-little-octopus/scenes.js` (Ollie, the counting cards), `songs/04-bubble-hands/scenes.js` (Bibi, home set).
+- Reference builds:
+  - **`songs/06-brush-teeth/scenes.js` is the model for new songs**: shared cast, one scene per pass with wide → mid → face close-up zooms, the prop count growing each pass, cards that fade before close-ups.
+  - `songs/01-little-octopus/scenes.js` (counting cards).
+- **`S.zoom` scales around the point and does not centre it.** Keep the hero near screen centre and zoom around the face. Cards and props near the frame edge get cropped in close-ups, so fade them out first.

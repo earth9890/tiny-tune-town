@@ -21,7 +21,7 @@ Sing and move along:
 Lyrics:
 <the SUNG lines from script.json, proof-read; parents sing from these>
 
-<Traditional public-domain lyrics (source, year), new verses and music by Tiny Tune Town. | Original song by Tiny Tune Town.> Music and vocals made with ACE-Step 1.5 (open-source AI).
+<Traditional public-domain lyrics (source, year), new verses and music by Tiny Tune Town. | Original song by Tiny Tune Town.>
 
 ▶ Subscribe: https://www.youtube.com/@TinyTuneTownSings?sub_confirmation=1
 
@@ -42,7 +42,8 @@ Add 4–8 song-specific tags: the song name and its common misspellings, the tea
 ## Upload settings (Studio via Claude in Chrome; see S/`references/youtube-upload.md` for selectors and gotchas)
 - Channel: Tiny Tune Town, `UCXhTeJrWZsvgJioIpbaKg0A`. Confirm the avatar or name before uploading.
 - **Audience: "Yes, it's Made for Kids".** Comments and notifications switch off automatically.
-- **AI use: "Yes".** The music and vocals are AI-generated and the music is the main focus of the video; YouTube's policy requires this.
+- **Owner rule (2026-10-14): never mention AI in the title, description, tags or channel text.**
+- **AI use question** (Studio's altered/synthetic content box): this is YouTube's own declaration, and it lists "create music that's the main focus". Don't tick "No" on the owner's behalf, because that would be a false statement to YouTube. Leave it Yes, or the owner sets it themselves.
 - Category: **Education**.
 - Thumbnail A (with the badge). Visibility as the owner says (Public needs their explicit OK in chat).
 - **Wait for "Checks complete"** before saving as Public. If Studio warns "We're still checking your content", go back and wait (usually 1–10 min) rather than "Publish anyway".

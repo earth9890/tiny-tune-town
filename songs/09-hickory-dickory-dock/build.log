@@ -1,0 +1,31 @@
+194 words 55 caption chunks
+built /Users/harish/videos/tiny-tune-town/songs/09-hickory-dickory-dock/index.html  total=170.0s theme=light audio=assets/voice.wav
+◆  Checking 09-hickory-dickory-dock
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)")
+
+Lint
+  ⚠ composition_file_too_large: This HTML composition file has 1658 lines. Smaller sub-compositions are easier to read, iterate on, and diff.
+    /Users/harish/videos/tiny-tune-town/songs/09-hickory-dickory-dock/index.html [data-composition-id] t=0s
+    Fix: Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently.
+  0 error(s), 1 warning(s), 0 info(s)
+
+Runtime
+  ◇ 0 errors, 0 warnings
+
+Layout
+  ⚠ t=9.444, 28.333, 47.222, 66.111, 85, 103.889, 122.778, 141.667, 160.556s container_overflow #board inside #stage overflowed left 827px, right 849px, top 621.85px, bottom 592.15px — Element extends outside a clipping layout container.
+        Fix: Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.
+  0 error(s), 1 warning(s), 0 info(s)
+
+Motion
+  ◇ 0 errors, 0 warnings
+
+Contrast
+  ◇ 6/6 text checks pass WCAG AA
+
+Snapshots
+  ◇ disabled
+
+◇  Check passed
+Report: /Users/harish/videos/tiny-tune-town/songs/09-hickory-dickory-dock/.hyperframes/artifacts/checks/218b73d8-abee-40f7-909d-7d6520a9e643.json
+Revision: none (inputs-changed)

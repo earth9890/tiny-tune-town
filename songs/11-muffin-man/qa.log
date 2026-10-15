@@ -1,0 +1,22 @@
+183 words 49 caption chunks
+built /Users/harish/videos/tiny-tune-town/songs/11-muffin-man/index.html  total=170.0s theme=light audio=assets/voice.wav
+        Fix: Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.
+  0 error(s), 1 warning(s), 0 info(s)
+
+Motion
+  ◇ 0 errors, 0 warnings
+
+Contrast
+  ◇ 16/16 text checks pass WCAG AA
+
+Snapshots
+  ◇ disabled
+
+◇  Check passed
+Report: /Users/harish/videos/tiny-tune-town/songs/11-muffin-man/.hyperframes/artifacts/checks/7ce24305-231f-4321-9c61-df8fa8c4b383.json
+Revision: none (unversioned)
+   .hyperframes/artifacts/snapshots/0603028b-ff66-43b4-b327-b11600e2c404/frame-23-at-168s.png
+   .hyperframes/artifacts/snapshots/0603028b-ff66-43b4-b327-b11600e2c404/frame-24-at-164.9s.png
+   /Users/harish/videos/tiny-tune-town/songs/11-muffin-man/.hyperframes/artifacts/snapshots/0603028b-ff66-43b4-b327-b11600e2c404/contact-sheet-1.jpg (grid view for AI review)
+   /Users/harish/videos/tiny-tune-town/songs/11-muffin-man/.hyperframes/artifacts/snapshots/0603028b-ff66-43b4-b327-b11600e2c404/contact-sheet-2.jpg (grid view for AI review)
+   /Users/harish/videos/tiny-tune-town/songs/11-muffin-man/.hyperframes/artifacts/snapshots/0603028b-ff66-43b4-b327-b11600e2c404/contact-sheet-3.jpg (grid view for AI review)
