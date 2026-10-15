@@ -18,7 +18,7 @@ A kids' nursery-rhyme channel: about 2-minute sing-along videos with catchy, mem
 3. **Quality over quantity.** YouTube demonetizes mass-produced, repetitive content, so every video gets a real story, original verses and careful visuals.
 
 ## Pipeline
-**The full workflow is the `tiny-tune-town` skill** (`~/.claude/skills/tiny-tune-town/`): topics, song engineering, visuals, thumbnails, package and upload. It is built on the CoComelon study in `research/cocomelon.md`. Tools: `tools/sing.py`, `tools/song_lint.py`, `tools/cast.js` (the shared cast), `tools/badge.sh`. Brand art: `brand/`.
+**The full workflow is the `tiny-tune-town` skill** (`~/.claude/skills/tiny-tune-town/`): topics, song engineering, visuals, thumbnails, package and upload. It is built on the CoComelon study in `research/cocomelon.md`. Tools: `tools/sing.py`, `tools/song_lint.py` (formula + rhyme check), `tools/remix.py` (vocals on top of the music), `tools/rhymes.py` (public-domain rhyme library in `research/rhymes/`), `tools/cast.js` (the shared cast), `tools/badge.sh`. Brand art: `brand/`.
 
 ### Original draft
 1. **Song sheet:** `songs/<slug>/song.md` holds the lyrics (verse, chorus, verse), the style tags, the BPM and the characters.

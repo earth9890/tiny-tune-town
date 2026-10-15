@@ -17,6 +17,9 @@
 | Ollie gag potential (8 arms, sea friends, bubbles) | none | some | built-in |
 | Fills a gap in our catalogue (tempo band, theme, playlist) | duplicate | partial | new |
 
+## Public-domain rhyme library
+`T/research/rhymes/` holds 683 traditional rhymes from 5 Gutenberg books (1833–1916), with the source and year, rhyme scheme, rhyme pairs, theme tags, actions and a `kid_safe` flag. Look for a classic there first: `python3 tools/rhymes.py tag bedtime --safe`, then `show <title>`. Many old rhymes are dark (deaths, beatings), so read each one before choosing it.
+
 ## Rights check (always)
 - **Public domain:** verify the text was published **before 1929** and note the year and source in `song.md`. Write our own melody and new verses anyway; the traditional melody is fine only if it is itself public domain.
 - **Never:**

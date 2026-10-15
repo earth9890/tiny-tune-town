@@ -13,3 +13,5 @@ __pycache__/
 .cache/
 *_prev.html
 **/*.nobadge.png
+# demucs stems (regenerable by tools/remix.py)
+**/assets/stems/
