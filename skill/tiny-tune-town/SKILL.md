@@ -17,7 +17,7 @@ Evidence: `T/research/cocomelon.md`, a study of the world's biggest kids' channe
 | **Writing and engineering the song** (one-slot formula, **simple perfect rhymes (the 5-year-old test)**, tempo bands, repetition, breaks, voice pitch and mix, ACE-Step caption recipe, seeds, remix) | `references/song-engineer.md` |
 | **Nursery-rhyme library**: 683 public-domain rhymes (Mother Goose 1833–1916, Halliwell 1842) with schemes, rhyme pairs, tags, actions; search with `tools/rhymes.py` | `T/research/rhymes/README.md` |
 | **Visuals** (cast, camera plan every 6–8 s, face close-ups on hooks, wordless story, captions, calm-pacing rules, QA) | `references/visuals.md` |
-| Thumbnails (giant face, prop, badge, ≤ 1 word) | `references/thumbnails.md` |
+| Thumbnails (giant face, prop, badge, ≤ 1 word) — always with the shared pro pass (`S/references/thumbnail-pro.md`: 3 concepts, critique rounds, `S/scripts/thumb_hires.py` final render) | `references/thumbnails.md` |
 | Title, description, tags, upload settings, cadence, compilations | `references/package-upload.md` |
 | Raw numbers and sources | `T/research/cocomelon.md`, thumbs in `T/research/cocomelon/thumbs/` |
 
@@ -46,7 +46,7 @@ lockf -t 3000 ~/videos/black-hole-life/.heavy.lock ~/.venvs/demucs/bin/python to
 python3 tools/rhymes.py tag animals --safe                                      # PD rhyme library: also show <title>, word <w>, pairs [tag]
 python3 tools/rhymes.py rhyme moon spoon                                         # perfect rhyme? (same check as the lint)
 python3 S/scripts/scene_lint.py songs/<slug>/scenes.js && python3 S/scripts/build.py songs/<slug> && (cd songs/<slug> && npx hyperframes check)
-python3 S/scripts/build.py songs/<slug> --thumb thumbnails/thumb-a.js thumbnails/a.png && tools/badge.sh songs/<slug>/thumbnails/a.png
+python3 S/scripts/thumb_hires.py songs/<slug> thumbnails/thumb-a.js thumbnails/a.png && tools/badge.sh songs/<slug>/thumbnails/a.png   # pixel-perfect 2x render
 S/scripts/finish.sh songs/<slug> none ~/videos/tiny-tune-town/songs/<slug>/renders/<slug>-4k.mp4   # 4K render; the OUT path must be absolute (a relative one lands inside the song folder)
 ```
 Brand files: `T/brand/` (`avatar.png` 800², `banner.jpg` 2560×1440, `badge.png`, sources `avatar.js`, `banner.js`).

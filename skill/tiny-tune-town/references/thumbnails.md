@@ -1,3 +1,5 @@
+> Read `~/.claude/skills/whiteboard-video-studio/references/thumbnail-pro.md` first (pro pass, owner 2026-10-22). Kids' twist: the emotion is delight/surprise, never fear; curiosity from a fun prop or a funny moment; Made for Kids: nothing scary.
+
 # Thumbnails
 
 From the CoComelon study (28 thumbnails, `T/research/cocomelon/thumbs/`) plus the whiteboard studio's thumbnail laws (S/`references/thumbnail-designer.md`: readable at 160 px, one idea, a big character).
