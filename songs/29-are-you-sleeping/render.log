@@ -1,0 +1,15 @@
+built /Users/harish/videos/tiny-tune-town/songs/29-are-you-sleeping/index.html  total=170.0s theme=light audio=assets/mix.wav
+  0 error(s), 1 warning(s), 0 info(s)
+  0 error(s), 2 warning(s), 0 info(s)
+  0 error(s), 1 warning(s), 4 info(s)
+  0 error(s), 6 warning(s), 0 info(s)
+◇  Check passed
+  Lint: 0 error(s), 1 warning(s) — run with --lint-verbose for full output.
+  Continuing render despite lint issues. Use --strict to block errors.
+  █████████████████████████  100%  Render complete
+   272.4 MB · 2m 50.0s video · rendered in 14m 54.5s
+h264,3840,2160,170.000000
+aac,170.000000
+blank_scan: 340 frames checked, 0 near-blank
+blank_scan: 340 frames checked, 0 near-blank
+RENDER-DONE

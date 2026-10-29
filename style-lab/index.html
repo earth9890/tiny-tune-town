@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tiny Tune Town Style Lab</title>
+<style>
+  :root { --bg:#fff7fb; --ink:#3a2f45; --card:#ffffff; --muted:#8a7d95; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 "Comic Sans MS","Chalkboard SE","Baloo 2",system-ui,sans-serif; }
+  header { padding:28px 16px 8px; max-width:1240px; margin:auto; }
+  h1 { margin:0 0 4px; font-size:30px; }
+  header p { margin:4px 0; color:var(--muted); }
+  .bar { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+  button { font:inherit; border:2px solid #f3b6cb; background:#fff; border-radius:999px; padding:6px 16px; cursor:pointer; color:var(--ink); }
+  button.on { background:#ffd9e6; }
+  main { max-width:1240px; margin:auto; padding:8px 16px 48px; display:grid; gap:22px; }
+  .card { background:var(--card); border-radius:28px; padding:16px 18px 18px; box-shadow:0 6px 24px rgba(200,80,130,.12); }
+  .card h2 { margin:0; font-size:22px; }
+  .card h2 small { font-size:14px; color:var(--muted); margin-left:6px; }
+  .card p { margin:4px 0 12px; color:var(--muted); font-size:15px; }
+  .stage { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
+  .scene { border-radius:22px; overflow:hidden; background:linear-gradient(#bfe6ff 0%,#dff3ff 55%,#fbe9c6 56%,#f7dca8 100%); }
+  .scene.sea { background:linear-gradient(#9fd8f5 0%,#cdeefc 58%,#f6e3bb 59%,#efd29a 100%); }
+  .scene svg { display:block; width:100%; height:auto; }
+  .ref img { width:100%; border-radius:22px; display:block; }
+  /* squish + blink: only when animation is on */
+  .anim .squish { animation:squish 1.6s ease-in-out infinite; transform-box:fill-box; transform-origin:50% 100%; }
+  .anim .blink { animation:blink 4s infinite; transform-box:fill-box; transform-origin:50% 50%; }
+  .anim .arm { animation:wave 1.6s ease-in-out infinite; transform-box:fill-box; transform-origin:50% 0%; }
+  @keyframes squish { 0%,100% { transform:scale(1,1); } 50% { transform:scale(1.04,.95); } }
+  @keyframes blink { 0%,92%,100% { transform:scaleY(1); } 95% { transform:scaleY(.1); } }
+  @keyframes wave { 0%,100% { transform:rotate(0); } 50% { transform:rotate(-6deg); } }
+  @media (prefers-reduced-motion:reduce) { .anim .squish,.anim .blink,.anim .arm { animation:none; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Tiny Tune Town · Style Lab</h1>
+  <p>Ollie and Bibi in 5 soft styles. Every style uses <b>one closed outline</b> around the whole body (no separate stick strips), chubby rounded shapes and softer colours than black.</p>
+  <p>Pick a letter (or mix: “A outline + B shading”). I'll then move the winner into <code>cast.js</code> and re-render a 1-minute test.</p>
+  <div class="bar"><button id="anim" class="on">Squish animation: on</button></div>
+</header>
+<main id="main">
+  <section class="card ref">
+    <h2>A + D · chosen <small>real video frames, London Bridge rebuilt with the new cast.js</small></h2>
+    <p>Rose outline under the fill (tentacles grow out of the head, no black lines across them), white sticker edge + soft shadow, gloss + sparkle, white suckers, chubby crab legs. Video: <a href="london-bridge-new-style-1080p.mp4">london-bridge-new-style-1080p.mp4</a> (appears when the render finishes).</p>
+    <div class="stage"><img src="ad-frame-54s.png" alt="New style frame at 54 s"><img src="ad-sheet.jpg" alt="New style frames"></div>
+  </section>
+  <section class="card ref">
+    <h2>Now <small>current look, for comparison</small></h2>
+    <p>Separate head circle, 8 long thin tentacles each with their own black outline, black ink lines.</p>
+    <div class="stage">
+      <img src="../songs/29-are-you-sleeping/thumbnails/a.nobadge.png" alt="Current Ollie thumbnail">
+      <img src="../songs/24-london-bridge/preview-sheet-1.jpg" alt="Current Ollie and Bibi frames">
+    </div>
+  </section>
+</main>
+
+<!-- shared filters -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="drop" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="6" flood-color="#b0406a" flood-opacity=".25"/></filter>
+    <filter id="inner" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="12" result="b"/>
+      <feOffset in="b" dx="8" dy="14" result="o"/>
+      <feComposite in="SourceAlpha" in2="o" operator="out" result="edge"/>
+      <feFlood flood-color="#d0507c" flood-opacity=".42"/>
+      <feComposite in2="edge" operator="in" result="sh"/>
+      <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="sh"/></feMerge>
+    </filter>
+    <filter id="felt" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="4" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0" result="g"/>
+      <feComponentTransfer in="g" result="soft"><feFuncR type="linear" slope=".3" intercept=".72"/><feFuncG type="linear" slope=".3" intercept=".72"/><feFuncB type="linear" slope=".3" intercept=".72"/></feComponentTransfer>
+      <feComposite in="soft" in2="SourceAlpha" operator="in" result="m"/>
+      <feBlend in="SourceGraphic" in2="m" mode="multiply"/>
+    </filter>
+    <filter id="wob" x="-15%" y="-15%" width="130%" height="130%">
+      <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="grain" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="3" seed="2" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -.9 .55" result="w"/>
+      <feComposite in="w" in2="SourceAlpha" operator="in" result="m"/>
+      <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="m"/></feMerge>
+    </filter>
+  </defs>
+</svg>
+
+<script>
+// Each style = how to paint one closed silhouette. Characters are lists of parts; the outline is drawn as
+// one stroked layer UNDER one fill layer, so overlaps merge into a single soft closed shape (no inner lines).
+const STYLES = [
+  { id:"A", name:"Soft Sticker", note:"Closest to today, but one merged body, short chubby tentacles, rose outline instead of black, white sticker edge and a soft shadow. Safest upgrade.",
+    line:"#c4416c", lw:9, sticker:16, shadow:"drop", grad:["#ffc6d9","#ff8fb3"], suckers:true, len:1, eye:"shine", mouthLine:"#9a2f55" },
+  { id:"B", name:"Mochi Squish", note:"No outline at all. Soft 3D shading, inner glow, very short squishy stubs. Feels like a soft rice-cake toy. Most 'squishy'.",
+    line:null, lw:0, sticker:0, shadow:null, filter:"inner", grad:["#ffd3e2","#ff86ad"], suckers:false, len:.62, eye:"shine", mouthLine:"#b3416a", blush:1.4 },
+  { id:"C", name:"Plush Toy", note:"Like a stuffed toy: felt texture, stitched seam, button-shine eyes, deep rose outline. Cosy, bedtime-friendly.",
+    line:"#9e3d5e", lw:7, sticker:0, shadow:"drop", filter:"felt", grad:["#ffbdd2","#f58aac"], suckers:false, len:.8, eye:"button", stitch:true, mouthLine:"#7e2c49" },
+  { id:"D", name:"Jelly Gloss", note:"Bright candy look: rich gradient, big glossy shine and sparkles, curly tentacle tips with suckers. Most eye-catching for thumbnails.",
+    line:"#d24f7c", lw:6, sticker:0, shadow:"drop", grad:["#ffc0d6","#ff5f97"], suckers:true, len:.9, curl:1.4, eye:"shine", gloss:true, mouthLine:"#a8204f" },
+  { id:"E", name:"Storybook Crayon", note:"Hand-drawn picture-book feel: warm brown wobbly line, pastel fill, paper grain. Calmest, most 'gentle'.",
+    line:"#7d4b3b", lw:7, sticker:0, shadow:null, wobble:true, filter:"grain", grad:["#ffd0de","#f7a6c0"], suckers:false, len:.85, eye:"dot", mouthLine:"#7d4b3b" },
+];
+
+const E = (tag, a, inner = "") => `<${tag} ${Object.entries(a).map(([k, v]) => `${k}="${v}"`).join(" ")}>${inner}</${tag}>`;
+
+// ---- Ollie: head + skirt + 8 chubby tentacles ----
+function ollieParts(st) {
+  const parts = [], L = st.len, curl = st.curl || 1;
+  // inner pair first so the outer arms sit on top; each arm flares out and curls up at the tip
+  [[186, 214], [160, 240], [132, 268], [106, 294]].forEach((pair, ring) => pair.forEach((x) => {
+    const d = (x - 200) / 94, s = Math.sign(d);
+    const ex = x + d * 105 * L, ey = 250 + (118 - ring * 10) * L;
+    const tx = ex + s * 30 * curl * L, ty = ey - 30 * curl * L;
+    const path = `M${x} 246 C${x + d * 10} ${246 + 60 * L} ${x + d * 45 * L} ${ey} ${ex} ${ey} Q${ex + s * 34 * curl * L} ${ey + 2} ${tx} ${ty}`;
+    parts.push({ t:"path", d:path, w:34 - ring * 2, tip:[tx, ty], mid:[ex - d * 14, ey - 3] });
+  }));
+  parts.push({ t:"ellipse", cx:200, cy:238, rx:108, ry:52 }, { t:"ellipse", cx:200, cy:160, rx:118, ry:110 });
+  return parts;
+}
+// ---- Bibi: ears + head + body + paws + feet ----
+function bibiParts() {
+  return [
+    { t:"ellipse", cx:158, cy:88, rx:30, ry:78, rot:-10 }, { t:"ellipse", cx:242, cy:88, rx:30, ry:78, rot:10 },
+    { t:"ellipse", cx:200, cy:300, rx:96, ry:78 },
+    { t:"ellipse", cx:146, cy:372, rx:42, ry:22 }, { t:"ellipse", cx:254, cy:372, rx:42, ry:22 },
+    { t:"ellipse", cx:200, cy:188, rx:108, ry:94 },
+  ];
+}
+const shape = (p, attrs) => p.t === "ellipse"
+  ? E("ellipse", { cx:p.cx, cy:p.cy, rx:p.rx, ry:p.ry, ...(p.rot ? { transform:`rotate(${p.rot} ${p.cx} ${p.cy})` } : {}), ...attrs })
+  : E("path", { d:p.d, fill:"none", "stroke-linecap":"round", "stroke-linejoin":"round", ...attrs, "stroke-width":(attrs["stroke-width"] || 0) + p.w });
+
+// one merged silhouette: [sticker edge] → [outline] → [fill]
+function body(parts, st, id, fillUrl) {
+  let out = "";
+  if (st.sticker) out += parts.map((p) => shape(p, p.t === "ellipse" ? { fill:"#fff", stroke:"#fff", "stroke-width":(st.lw + st.sticker) * 2 } : { stroke:"#fff", "stroke-width":(st.lw + st.sticker) * 2 })).join("");
+  if (st.line) out += parts.map((p) => shape(p, p.t === "ellipse" ? { fill:st.line, stroke:st.line, "stroke-width":st.lw * 2 } : { stroke:st.line, "stroke-width":st.lw * 2 })).join("");
+  const fills = parts.map((p) => shape(p, p.t === "ellipse" ? { fill:fillUrl } : { stroke:fillUrl })).join("");
+  const rims = parts.filter((p) => p.t === "path").map((p) => shape(p, { stroke:"#fff", "stroke-opacity":.22, "stroke-width":-12 })).join("");
+  out += E("g", st.filter ? { filter:`url(#${st.filter})` } : {}, fills.replace(/(<ellipse[^>]*>)/, rims + "$1"));
+  return E("g", { ...(st.shadow ? { filter:`url(#${st.shadow})` } : {}), ...(st.wobble ? { style:"filter:url(#wob)" } : {}) }, out);
+}
+
+function defs(st, id) {
+  return `<defs>
+    <linearGradient id="g${id}" gradientUnits="userSpaceOnUse" x1="140" y1="50" x2="260" y2="390"><stop offset="0" stop-color="${st.grad[0]}"/><stop offset="1" stop-color="${st.grad[1]}"/></linearGradient>
+    <radialGradient id="r${id}" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ff6f91" stop-opacity=".55"/><stop offset="1" stop-color="#ff6f91" stop-opacity="0"/></radialGradient>
+    <linearGradient id="y${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe27a"/><stop offset="1" stop-color="#ffbe3d"/></linearGradient>
+  </defs>`;
+}
+
+function eyes(st, pts, r) {
+  return pts.map(([x, y]) => {
+    if (st.eye === "button") return E("g", { class:"blink" },
+      E("ellipse", { cx:x, cy:y + 4, rx:r * .78, ry:r * .86, fill:"#2b2238" }) +
+      E("ellipse", { cx:x - r * .28, cy:y - r * .2, rx:r * .26, ry:r * .2, fill:"#fff", opacity:.9 }) +
+      E("circle", { cx:x + r * .25, cy:y + r * .35, r:r * .1, fill:"#fff", opacity:.7 }));
+    if (st.eye === "dot") return E("g", { class:"blink" },
+      E("ellipse", { cx:x, cy:y + 6, rx:r * .42, ry:r * .52, fill:"#4a3530" }) +
+      E("circle", { cx:x - r * .12, cy:y - r * .05, r:r * .14, fill:"#fff" }));
+    return E("g", { class:"blink" },
+      E("ellipse", { cx:x, cy:y, rx:r, ry:r * 1.15, fill:"#fff", ...(st.line ? { stroke:st.line, "stroke-width":st.lw * .55 } : {}) }) +
+      E("ellipse", { cx:x + 2, cy:y + r * .18, rx:r * .64, ry:r * .74, fill:"#2b2238" }) +
+      E("circle", { cx:x - r * .2, cy:y - r * .2, r:r * .26, fill:"#fff" }) +
+      E("circle", { cx:x + r * .28, cy:y + r * .45, r:r * .12, fill:"#fff" }));
+  }).join("");
+}
+
+function ollieSVG(st) {
+  const id = "o" + st.id, P = ollieParts(st), g = `url(#g${id})`;
+  let face = "";
+  face += E("ellipse", { cx:148, cy:98, rx:36, ry:18, transform:"rotate(-24 148 98)", fill:"#fff", opacity:st.gloss ? .75 : .45 });
+  if (st.gloss) face += E("circle", { cx:186, cy:80, r:7, fill:"#fff", opacity:.8 }) + E("path", { d:"M300 70 l6 14 14 6 -14 6 -6 14 -6 -14 -14 -6 14 -6z", fill:"#fff6b0" });
+  [[262, 96, 13], [286, 130, 8], [118, 150, 7]].forEach(([x, y, r]) => face += E("circle", { cx:x, cy:y, r, fill:st.grad[1], opacity:.35 }));
+  if (st.stitch) face += E("ellipse", { cx:200, cy:170, rx:100, ry:92, fill:"none", stroke:st.line, "stroke-width":3, "stroke-dasharray":"8 9", opacity:.5 });
+  face += eyes(st, [[156, 170], [244, 170]], 31);
+  const bl = st.blush || 1;
+  face += E("ellipse", { cx:112, cy:212, rx:26 * bl, ry:16 * bl, fill:`url(#r${id})` }) + E("ellipse", { cx:288, cy:212, rx:26 * bl, ry:16 * bl, fill:`url(#r${id})` });
+  face += E("path", { d:"M176 214 Q200 246 224 214 Q200 222 176 214 Z", fill:"#e2416d", stroke:st.mouthLine, "stroke-width":4, "stroke-linejoin":"round" });
+  face += E("ellipse", { cx:200, cy:230, rx:9, ry:5, fill:"#ff9db8" });
+  let suck = "";
+  if (st.suckers) P.filter((p) => p.mid).forEach((p) => suck += E("circle", { cx:p.mid[0], cy:p.mid[1], r:6, fill:"#fff", opacity:.55 }) + E("circle", { cx:(p.mid[0] + p.tip[0]) / 2, cy:(p.mid[1] + p.tip[1]) / 2 + 3, r:4.5, fill:"#fff", opacity:.5 }));
+  const shadow = E("ellipse", { cx:200, cy:400, rx:190, ry:14, fill:"#7a4a6a", opacity:.16 });
+  return E("svg", { viewBox:"-40 -20 480 460", role:"img", "aria-label":`Ollie, style ${st.id}` },
+    defs(st, id) + shadow + E("g", { class:"squish" }, body(P, st, id, g) + suck + face));
+}
+
+function bibiSVG(st) {
+  const id = "b" + st.id, P = bibiParts(), g = `url(#g${id})`;
+  let f = "";
+  f += E("ellipse", { cx:158, cy:96, rx:13, ry:52, transform:"rotate(-10 158 96)", fill:st.grad[1], opacity:.55 });
+  f += E("ellipse", { cx:242, cy:96, rx:13, ry:52, transform:"rotate(10 242 96)", fill:st.grad[1], opacity:.55 });
+  f += E("ellipse", { cx:200, cy:314, rx:58, ry:50, fill:"#fff", opacity:.75 });
+  f += E("ellipse", { cx:160, cy:134, rx:28, ry:13, transform:"rotate(-20 160 134)", fill:"#fff", opacity:st.gloss ? .7 : .4 });
+  if (st.stitch) f += E("ellipse", { cx:200, cy:190, rx:92, ry:78, fill:"none", stroke:st.line, "stroke-width":3, "stroke-dasharray":"8 9", opacity:.45 });
+  f += eyes(st, [[160, 186], [240, 186]], 22);
+  f += E("ellipse", { cx:122, cy:220, rx:22, ry:13, fill:`url(#r${id})` }) + E("ellipse", { cx:278, cy:220, rx:22, ry:13, fill:`url(#r${id})` });
+  f += E("ellipse", { cx:200, cy:212, rx:11, ry:8, fill:"#e86b8d" });
+  f += E("path", { d:"M200 220 Q188 238 176 228 M200 220 Q212 238 224 228", fill:"none", stroke:st.mouthLine, "stroke-width":4, "stroke-linecap":"round" });
+  // waving paw (own little silhouette so it can move)
+  const paw = [{ t:"ellipse", cx:296, cy:276, rx:30, ry:36, rot:-25 }], paw2 = [{ t:"ellipse", cx:106, cy:300, rx:30, ry:34, rot:20 }];
+  const arms = body(paw2, st, id, g) + E("g", { class:"arm" }, body(paw, st, id, g));
+  // yellow bow = Bibi's signature
+  const bow = { ...st, grad:["#ffe27a", "#ffbe3d"], shadow:null, sticker:st.sticker ? 8 : 0 };
+  const bowParts = [{ t:"ellipse", cx:244, cy:110, rx:26, ry:19, rot:-32 }, { t:"ellipse", cx:292, cy:110, rx:26, ry:19, rot:32 }, { t:"ellipse", cx:268, cy:112, rx:12, ry:12 }];
+  const shadow = E("ellipse", { cx:200, cy:394, rx:120, ry:12, fill:"#7a4a6a", opacity:.16 });
+  return E("svg", { viewBox:"-20 -20 440 460", role:"img", "aria-label":`Bibi, style ${st.id}` },
+    defs(st, id) + shadow + E("g", { class:"squish" }, body(P, st, id, g) + f + arms + body(bowParts, bow, id, `url(#y${id})`)));
+}
+
+const main = document.getElementById("main");
+STYLES.forEach((st) => {
+  const c = document.createElement("section");
+  c.className = "card anim";
+  c.innerHTML = `<h2>${st.id} · ${st.name}</h2><p>${st.note}</p>
+    <div class="stage"><div class="scene sea">${ollieSVG(st)}</div><div class="scene">${bibiSVG(st)}</div>
+    <div class="scene sea" style="display:flex;align-items:flex-end;gap:0">${ollieSVG(st).replace("<svg", '<svg style="width:58%"')}${bibiSVG(st).replace("<svg", '<svg style="width:42%"')}</div></div>`;
+  main.appendChild(c);
+});
+const btn = document.getElementById("anim");
+btn.onclick = () => { const on = btn.classList.toggle("on"); btn.textContent = "Squish animation: " + (on ? "on" : "off"); document.querySelectorAll(".card:not(.ref)").forEach((c) => c.classList.toggle("anim", on)); };
+</script>
+</body>
+</html>

@@ -132,10 +132,10 @@ duration: 170
 
 ## 7. Singing with ACE-Step (what we learned)
 - It runs **DiT-only** (turbo model, 8 steps, `shift 3.0`); the 1.7B planner LM runs the 16 GB Mac out of memory. Expect about 4–6 min per 110 s, and more for 170 s.
-- `--seed N` is honoured. Try **up to 3 seeds** (for example 7, 21, 42) and keep the best one.
+- `--seed N` is honoured. Start with 3 seeds (7, 21, 42); if no take sings **every verse**, sing 5 more (3, 11, 64, 99, 123). Song 30 needed 8 seeds before verse two was sung. A counting song must never skip a number.
 - **It drops, merges or repeats lines,** especially long or wordy lines, and on any song longer than its pattern. Short, repetitive lines get sung reliably; this is one more reason for the one-slot formula.
 - **Listen check:**
-  1. Make a 16 kHz mono copy and run whisper with `-oj`.
+  1. Make a 16 kHz mono copy and run `tools/transcribe.py` on it (see SKILL.md Commands; faster-whisper large-v3-turbo with word times, from VoiceStudio's install, app not needed). Score the plain take; transcribe the vocal stem of the winner for timing.
   2. Compare it with the lyrics. Fewer than about 80 % of lines sung in order, or a long instrumental gap in the middle, means trying another seed.
   3. Listen yourself before calling a song done. Whisper can't hear melody, timing or a weird voice.
 - Copy the chosen take to `assets/voice.wav`.
@@ -150,6 +150,7 @@ duration: 170
   2. Write `assets/clipt.json`: `{"clips":[[s,e],...],"total":<song length>}`, taken from whisper's segment times.
   3. Fix merged or split lines by hand; every clip needs start ≤ end, in order.
   4. Then `build.py` gives karaoke captions plus `W(line, word)` cues for the pictures.
+- **Garbled stretch near the end?** Cut it from the final render instead of re-singing: fit the beat grid on the music stem, pick bar-line cut points, `ffmpeg` `xfade` + `acrossfade` 0.4 s → `renders/<slug>-4k-cut.mp4` (keep the original). Captions are baked in and move with the video; check frames and re-transcribe ±10 s around the cut (song 30: 6 bars cut, 2:50 → 2:37).
 - **Loudness:** `remix.py` and `finish.sh` both master to about −14 to −15 LUFS. All 17 launch renders measure −13.8 to −14.9 LUFS, so the overall level was never the problem; the balance inside the mix was.
 
 ## 8. Hooks that work for kids *and* parents

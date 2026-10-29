@@ -1,0 +1,31 @@
+# Progress 30
+- stage1 sing seed 7 started Thu Oct 29 13:51:05 IST 2026
+- sing seed7 done -> takes/take-7-1.wav, copied to assets/voice.wav; next remix
+- seed7 coverage poor (~20/32; verse two missing, chorus mangled). trying seed 21
+- seed21 worse. trying 42
+- seed 42 chosen, remixed +8.0 dB, voice.wav set. Verse two (shoe) not sung. next: timing
+- timing DONE: script.json (40 sung lines) + assets/clipt.json hand-built from whisper words + vocal energy (seed 42). Coverage ~30/32 planned sung lines; verse two ("two/shoe") only "Wow! Two!" + its 2 refrain lines sung (clips 6-9). Clip numbers (1-based): 1 intro, 2-5 v1, 6-9 v2, 10-13 v3, 14-17 v4, 18-21 v5, 22 "Ten! Again!", 23-27 v10 (27 = extra pat line), 28-32 chorus1, 33-34 + 35-37 chorus2, 38-39, 40 bye. Next: add puppy to tools/cast.js, write scenes.js
+- scenes.js v1 written (puppy+bone appended to tools/cast.js; backup of cast.js in scratchpad). next: lint, build, check, snapshot
+- check passes; snapshotting (times in scratchpad times.txt)
+- v2 scenes (bigger cast, 4 shots/pass, new chorus layout) building; snapshots round 2
+- v3 tweaks (cards in wide+face shots, layout). next: spot snapshot, thumbnails
+- thumbnails: thumb-a.js, thumb-b.js drafted; rendering via thumb_hires
+- package.md written; waiting on thumbnails render (heavy lock busy)
+- thumbnails a.png (TAP! drum+turtle) and b.png (puppy+bone, rendered at 1x then downsampled: 2x Chrome render hangs on the puppy filter) done + badge. next: final check + render
+- check OK; starting 4K render finish.sh Thu Oct 29 15:35:12 IST 2026
+- word-card fix applied, check passed. RENDER starting Thu Oct 29 15:38:19 IST 2026
+- RENDER DONE renders/30-this-old-man-4k.mp4 (3840x2160, 170s, blank_scan 0). RENDERED touched. Remaining: report.
+- ROUND 2 started: singing seeds 3 11 64 99 123 sequentially (script scratchpad sing5.sh); score with tools/transcribe.py
+- seed 3 scored: v1-v4 complete incl two/shoe, v5 line1 missing (Splash! x4), ten verse partly, chorus ok, final ok -> strong candidate (takes/transcript-3.json)
+- seed 11 scored: all verses incl two/shoe and five; verse 3 line1 merged, chorus1 has ~20s gap (122-143)
+- seed 64 scored: poor (verses 2 and 5 missing, long garbled intro)
+- seed 99: verse 3 and 5 incomplete, final garbled. seed 123 scored next
+- ROUND2 seed 123 CHOSEN (all verses). remixing, retiming
+- round2 timing written (43 clips) from stem transcript takes/transcript-123-vocals.json; old seed-42 timing kept in takes/r1. Unclear: 88.7-95 break, 147-163 garbled ad-lib; chorus 2 lacks 'This old man came rolling home'. next: remap scenes.js clip numbers
+- scenes.js remapped to new clips + framing fixes (face k2.0, B shots, word cards after word). next: check/snapshot
+- round2: tB=tt-1.6 etc; checking
+- thumb b redone at 2x (white sticker via fat white clone; Chrome hangs on any filter over the puppy at 2x)
+- thumb b final (2x). old render trashed; re-render starting Thu Oct 29 17:17:19 IST 2026
+- ROUND 2 RENDER DONE (seed 123). RENDERED touched.
+- CUT: keep 0-148.895 (bar), jump to 161.374 (bar) = 6 bars removed (12.479s), xfade 0.4; new len 157.521; output 30-this-old-man-4k-cut.mp4 (ffmpeg, original untouched)
+- cut done: renders/30-this-old-man-4k-cut.mp4 157.5s, removed 148.895-161.374 (6 bars), -15.0 LUFS, package.md duration set

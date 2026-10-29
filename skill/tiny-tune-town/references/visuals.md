@@ -16,12 +16,21 @@ The big channels feel rich because the camera keeps changing *size*: a wide set-
 | fish, crab, star, turtle | Sea friends, guests | in `cast.js` |
 | **Bibi** (pink bunny, yellow bow) | Best friend for land, home and routine songs | in `cast.js`: `bibi(S, x, headY, {k, mood: "joy", paws: [[lx,ly],[rx,ry]]})` with `.g .L .R` (arm groups, rotate about `.sh` to wave) |
 | Bathroom set | sink scenes (teeth, hands, bath) | `DS.room(S, BATH_ROOM)`, `bathWall`, `bathSink` (draw it **after** Ollie so he stands behind the counter), `tapWater`, `foam` |
+| Puppy | Guest dog (This Old Man) | `puppy(S, x, groundY, k, o)`; `bone(S, parent, k)` |
 | Props | | `toothbrush(S, x0, y0, x1, y1, {c, parent})` |
 | Grown-ups | Kind, present parent figure (for routine songs) | to design once, then add to `cast.js` |
 Rules:
 - New characters are added to `cast.js` (never redefined per song), with the same build in every scene and thumbnail.
 - **Never give two characters the same name.** "Pip" was a bunny in 02 and a kid in 05.
 - Ollie can live on land too: a fish-bowl helmet, a bathtub, a puddle, or just waddling. Keep him in every song.
+
+## 1b. The soft toon look (owner pick "A + D", 2026-10-29; first used on song 30)
+Kids-friendly "soft squishy" characters: closed, rounded silhouettes instead of straight ink lines. Built into `cast.js`; style lab with the variations in `T/style-lab/index.html`.
+- **No black outlines.** Every outline is a darker shade of the shape's own colour: `LN(name)`. Use `toon(S, d, name, {parent, flat, c, lw, w})` for any new shape (it draws with `paint-order: stroke`, so only the outer half of the thick stroke shows).
+- **One merged silhouette:** draw the body outline first (`toonBack`), then the limbs, then the body fill (`toonFill`) on top, so arms grow out of the body with no seam.
+- **Sticker edge + soft shadow:** wrap each character's group in `toyFx(g, r)` (white edge, soft pink drop shadow). Gloss highlight + a small `twinkle()` star on heads.
+- New characters and props follow the same rules; no plain `DS.shape` ink outlines on cast or hero props.
+- Thumbnails: Chrome hangs rendering `toyFx` at 2x over large characters (seen on the puppy). Fake the white edge with a fat white copy of the shape instead.
 
 ## 2. Camera plan: a framing change every 6–8 s, never a hard cut
 Write a **shot list** before any code: one row per 6–8 s, with the framing and what changes.
@@ -62,7 +71,7 @@ Write a **shot list** before any code: one row per 6–8 s, with the framing and
 ## 6. QA before render
 - [ ] `scene_lint.py` passes; `build.py` and `npx hyperframes check` report 0 errors.
 - [ ] The shot list covers every 6–8 s; every tag line has a face close-up.
-- [ ] Snapshots at each shot's end −0.8 s (`npx hyperframes snapshot`, as in S/SKILL.md). READ every frame: nothing floating, faces never cut by the frame edge in close-ups, no labels over faces, the right cast build, readable numbers.
+- [ ] Snapshots at each shot's end −0.8 s (`npx hyperframes snapshot`, as in S/SKILL.md). READ every frame: nothing floating, faces never cut by the frame edge in close-ups **or wides** (cast at the screen edges got clipped on song 30), no labels or word cards over faces, the right cast build, readable numbers.
 - [ ] Mid-crossfade frames: no half-built characters (the engine's still fix shows bodies 0.65 s early).
 - [ ] Watch the full render once at 1× with sound; picture changes land on their words.
 

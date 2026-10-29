@@ -11,6 +11,34 @@ const tw = (e, t, dur, a, b, ease = "power2.inOut") => tl.fromTo(e, { attr: { tr
 const G = (S, parent, tf) => { const g = S.grp(parent); if (tf) g.setAttribute("transform", tf); return g; };
 const fadeIn = (S, e, t) => { if (t > S.start + 0.05) tl.fromTo(e, { opacity: 0 }, { opacity: +(e.getAttribute("opacity") ?? 1), duration: 0.35, ease: "power1.out" }, t); }; // keeps a shadow's own opacity
 
+// ---------- soft toy look (2026-10-29 style lab "A + D") ----------
+// One closed outline per creature, in a darker shade of its OWN colour (no black ink), painted UNDER the fill so limbs
+// merge into the body; glossy highlights; white sticker edge + soft shadow come from one filter on the whole character.
+const LN = (name, layer = "near") => DS.mix(DS.c(name, 2, layer), DS.P.ink[0], 0.28);
+const LW = DS.w.near * 3; // stroke width; only the outer half shows (paint-order: stroke)
+const toon = (S, d, name, o = {}) => {
+  const e = S.draw(d, o.t ?? S.start, 0, { c: o.c || LN(name, o.layer), w: o.lw || (o.w ? DS.w[o.w] * 2.5 : LW), fill: o.flat ? DS.c(name, o.tone || 0, o.layer) : DS.vol(name, o.layer || "near", o.dir), parent: o.parent, op: o.op });
+  e.setAttribute("paint-order", "stroke"); return e;
+};
+const toonBack = (S, d, name, parent, lw = LW) => S.draw(d, S.start, 0, { c: LN(name), w: lw, fill: LN(name), parent }); // outline-only layer, under the limbs
+const toonFill = (S, d, name, parent) => S.fill(d, S.start, 0, DS.vol(name), 1, parent);                                // fill-only layer, over the limb roots
+const toyFx = (g, r = 9) => {
+  const id = "ttt-toy" + Math.round(r * 10);
+  if (!document.getElementById(id)) {
+    const f = el("filter", { id, x: "-25%", y: "-25%", width: "150%", height: "150%" }, dsDefs());
+    el("feMorphology", { in: "SourceAlpha", operator: "dilate", radius: r, result: "fat" }, f);
+    el("feFlood", { "flood-color": DS.P.white[0], result: "w" }, f);
+    el("feComposite", { in: "w", in2: "fat", operator: "in", result: "edge" }, f);
+    el("feGaussianBlur", { in: "fat", stdDeviation: r * 1.1, result: "b" }, f);
+    el("feOffset", { in: "b", dy: r * 1.4, result: "bo" }, f);
+    el("feFlood", { "flood-color": DS.P.pink[2], "flood-opacity": 0.3, result: "sc" }, f);
+    el("feComposite", { in: "sc", in2: "bo", operator: "in", result: "sh" }, f);
+    const m = el("feMerge", {}, f); ["sh", "edge", "SourceGraphic"].forEach((n) => el("feMergeNode", { in: n }, m));
+  }
+  g.setAttribute("filter", `url(#${id})`); return g;
+};
+const twinkle = (S, x, y, r, parent) => S.fill(`M${x} ${y - r} Q${x} ${y} ${x + r} ${y} Q${x} ${y} ${x} ${y + r} Q${x} ${y} ${x - r} ${y} Q${x} ${y} ${x} ${y - r} Z`, S.start, 0, DS.c("yellow", 1), 0.95, parent);
+
 // ---------- shapes ----------
 const cr = (P, n = 6) => { const o = []; for (let i = 0; i < P.length - 1; i++) { const p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2; for (let j = 0; j < n; j++) { const t = j / n; o.push([0, 1].map((a) => 0.5 * (2 * p1[a] + (p2[a] - p0[a]) * t + (2 * p0[a] - 5 * p1[a] + 4 * p2[a] - p3[a]) * t * t + (3 * p1[a] - p0[a] - 3 * p2[a] + p3[a]) * t * t * t))); } } o.push(P[P.length - 1]); return o; };
 // tapered tube along a curve (tentacles, seaweed): width w0 at the root → w1 at the round tip
@@ -33,36 +61,40 @@ const ollie = (S, cx, gy, k = 1, o = {}) => {
   const t = o.t ?? S.start, s0 = S.start, look = o.look || 0;
   const sh = DS.shadow(S, cx, gy, 600 * k);
   const pos = G(S, null, `translate(${cx} ${gy}) scale(${k})`), lift = G(S, pos, "translate(0 0)"), bob = G(S, lift, "translate(0 0)"), size = G(S, bob, "scale(1)"), body = G(S, size, "rotate(0 0 -250)");
-  const arms = {};
+  const arms = {}, BODY = circ(0, -335, 150, 165); // head; its fill covers the arm roots, so arms grow out of one silhouette
+  toonBack(S, BODY, "pink", body);
   [0, 1, 2, 3].forEach((ai) => [-1, 1].forEach((side) => {
     const [rx, P] = ARMS[ai], x = rx * side, y = -200;
     const pose = G(S, body, `rotate(0 ${x} ${y})`), wig = G(S, pose, `rotate(0 ${x} ${y})`);
-    const { d, C } = tube(P.map(([px, py]) => [x + px * side, y + py]), 34, 11);
-    DS.shape(S, d, "pink", { t: s0, parent: wig });
-    C.forEach((p, i) => { if (i > 5 && i < C.length - 3 && i % 3 === 0) S.fill(circ(p[0], p[1], 6 + 5 * (1 - i / C.length)), s0, 0, DS.c("pink", 1), 0.95, wig); });
+    const { d, C } = tube(P.map(([px, py]) => [x + px * side, y + py]), 40, 21);
+    toon(S, d, "pink", { parent: wig });
+    C.forEach((p, i) => { if (i > 7 && i < C.length - 2 && i % 3 === 0) S.fill(circ(p[0], p[1], 6 + 4 * (1 - i / C.length)), s0, 0, DS.P.white[0], 0.55, wig); });
     arms[ai + "," + side] = { pose, wig, x, y, side, ai, tip: C[C.length - 1], cur: 0 };
   }));
-  DS.shape(S, circ(0, -335, 150, 165), "pink", { t: s0, parent: body });
-  S.fill(circ(-66, -428, 36, 20), s0, 0, DS.P.white[0], 0.5, body);
+  toonFill(S, BODY, "pink", body);
+  S.fill(circ(-66, -428, 40, 22), s0, 0, DS.P.white[0], 0.7, body);
+  S.fill(circ(-10, -462, 9), s0, 0, DS.P.white[0], 0.8, body);
+  twinkle(S, 128, -478, 20, body);
   [[78, -440, 15], [108, -392, 10], [-112, -372, 9]].forEach(([x, y, r]) => S.fill(circ(x, y, r), s0, 0, DS.c("pink", 2), 0.45, body));
   [-1, 1].forEach((s) => {
-    DS.shape(S, circ(58 * s, -330, 40, 48), "white", { t: s0, parent: body, flat: true, w: "mid" });
+    toon(S, circ(58 * s, -330, 40, 48), "white", { parent: body, flat: true, c: LN("pink"), lw: DS.w.mid * 2 });
     S.fill(circ(58 * s + look, -318, 25), s0, 0, DS.P.ink[0], 1, body);
     S.fill(circ(58 * s + look - 9, -329, 9), s0, 0, DS.P.white[0], 1, body);
     S.fill(circ(58 * s + look + 8, -309, 4), s0, 0, DS.P.white[0], 1, body);
     S.fill(circ(104 * s, -258, 26, 15), s0, 0, DS.c("red", 1), 0.55, body);
   });
-  const smile = S.draw("M-34 -262 Q0 -226 34 -262", s0, 0, { c: DS.line(), w: DS.w.near, parent: body });
+  const smile = S.draw("M-34 -262 Q0 -226 34 -262", s0, 0, { c: LN("red"), w: DS.w.near, parent: body });
   const open = G(S, body); open.setAttribute("opacity", 0);
-  S.draw("M-36 -266 Q0 -196 36 -266 Z", s0, 0, { c: DS.line(), w: DS.w.near, fill: DS.c("red", 2), parent: open });
+  S.draw("M-36 -266 Q0 -196 36 -266 Z", s0, 0, { c: LN("red"), w: DS.w.near, fill: DS.c("red", 2), parent: open });
   S.fill(circ(0, -228, 15, 8), s0, 0, DS.c("pink", 1), 1, open);
   const grin = G(S, body); grin.setAttribute("opacity", 0); // big toothy smile (teeth songs, finales)
-  S.draw("M-82 -282 Q0 -150 82 -282 Z", s0, 0, { c: DS.line(), w: DS.w.near, fill: DS.c("red", 2), parent: grin });
+  S.draw("M-82 -282 Q0 -150 82 -282 Z", s0, 0, { c: LN("red"), w: DS.w.near, fill: DS.c("red", 2), parent: grin });
   S.fill(circ(0, -214, 26, 12), s0, 0, DS.c("pink", 1), 1, grin);
   S.draw("M-74 -279 Q0 -236 74 -279 L68 -262 Q0 -218 -68 -262 Z", s0, 0, { c: DS.c("gray", 1), w: DS.w.hair, fill: DS.P.white[0], parent: grin });
   [-48, -24, 0, 24, 48].forEach((x) => S.draw(`M${x} ${-268 + Math.abs(x) * 0.1} V${-238 + Math.abs(x) * 0.33}`, s0, 0, { c: DS.c("gray", 1), w: DS.w.hair, parent: grin }));
   if (o.mouth === "open") { open.setAttribute("opacity", 1); smile.setAttribute("opacity", 0); }
   if (o.mouth === "grin") { grin.setAttribute("opacity", 1); smile.setAttribute("opacity", 0); }
+  toyFx(pos);
   if (t > s0 + 0.05) { fadeIn(S, pos, t); fadeIn(S, sh, t); }
   const all = COUNT.map(([ai, s]) => arms[ai + "," + s]);
   const O = { pos, lift, bob, size, body, arms: all, k, cx, gy, liftY: 0, sz: 1,
@@ -96,14 +128,14 @@ const ollie = (S, cx, gy, k = 1, o = {}) => {
 // ---------- sea friends ----------
 const fish = (S, x, y, k = 1, name = "yellow", dir = 1, o = {}) => {
   const s0 = S.start, pos = G(S, null, `translate(${x} ${y}) scale(${k * dir} ${k})`), bob = G(S, pos, "translate(0 0)");
-  DS.shape(S, "M-55 0 C-80 -20 -100 -45 -122 -48 C-108 -16 -108 16 -122 48 C-100 45 -80 20 -55 0 Z", name, { t: s0, parent: bob, w: "mid" });
-  DS.shape(S, "M-24 -42 C-10 -86 40 -80 46 -38 Z", name, { t: s0, parent: bob, w: "mid" });
-  DS.shape(S, circ(0, 0, 74, 52), name, { t: s0, parent: bob, w: "mid" });
+  toon(S, "M-55 0 C-80 -20 -100 -45 -122 -48 C-108 -16 -108 16 -122 48 C-100 45 -80 20 -55 0 Z", name, { t: s0, parent: bob, w: "mid" });
+  toon(S, "M-24 -42 C-10 -86 40 -80 46 -38 Z", name, { t: s0, parent: bob, w: "mid" });
+  toon(S, circ(0, 0, 74, 52), name, { t: s0, parent: bob, w: "mid" });
   S.draw(smooth([[-22, -48], [-30, 0], [-22, 48]]), s0, 0, { c: DS.c(name, 2), w: DS.w.mid, parent: bob });
-  DS.shape(S, circ(36, -12, 17), "white", { t: s0, parent: bob, flat: true, w: "detail" });
+  toon(S, circ(36, -12, 17), "white", { t: s0, parent: bob, flat: true, w: "detail" });
   S.fill(circ(40, -10, 9), s0, 0, DS.P.ink[0], 1, bob); S.fill(circ(37, -14, 3.5), s0, 0, DS.P.white[0], 1, bob);
-  S.draw("M34 20 Q46 30 58 16", s0, 0, { c: DS.line(), w: DS.w.mid, parent: bob });
-  fadeIn(S, pos, o.t ?? s0);
+  S.draw("M34 20 Q46 30 58 16", s0, 0, { c: LN("red"), w: DS.w.mid, parent: bob });
+  toyFx(pos, 7); fadeIn(S, pos, o.t ?? s0);
   const F = { pos, bob, x, y };
   F.swim = (t0, t1, amp = 14) => tw(bob, t0, t1 - t0, "translate(0 0)", `translate(0 ${-amp})`, hump(cyc(t1 - t0, 2 * BEAT)));
   F.move = (x1, y1, t0, dur = 1.6) => { tw(pos, t0, dur, `translate(${F.x} ${F.y}) scale(${k * dir} ${k})`, `translate(${x1} ${y1}) scale(${k * dir} ${k})`, "sine.inOut"); F.x = x1; F.y = y1; };
@@ -112,42 +144,42 @@ const fish = (S, x, y, k = 1, name = "yellow", dir = 1, o = {}) => {
 const crab = (S, x, gy, k = 1, o = {}) => {
   const s0 = S.start, sh = DS.shadow(S, x, gy, 300 * k), pos = G(S, null, `translate(${x} ${gy}) scale(${k})`), bob = G(S, pos, "translate(0 0)"), claws = [];
   [-1, 1].forEach((s) => {
-    [0, 1, 2].forEach((i) => S.draw(smooth([[s * 50, -52 + i * 12], [s * (92 + i * 10), -44 + i * 14], [s * (108 + i * 12), -2]]), s0, 0, { c: DS.c("orange", 2), w: DS.w.near, parent: bob }));
-    S.draw(`M${s * 24} -112 L${s * 32} -152`, s0, 0, { c: DS.c("orange", 2), w: DS.w.near, parent: bob });
-    S.draw(smooth([[s * 66, -96], [s * 96, -124], [s * 106, -150]]), s0, 0, { c: DS.c("orange", 2), w: DS.w.near, parent: bob });
+    [0, 1, 2].forEach((i) => toon(S, tube([[s * 50, -52 + i * 12], [s * (92 + i * 10), -44 + i * 14], [s * (108 + i * 12), -6]], 11, 9).d, "orange", { parent: bob, lw: DS.w.mid * 2.5, tone: 2, flat: true }));
+    toon(S, tube([[s * 24, -112], [s * 30, -134], [s * 32, -152]], 9, 8).d, "orange", { parent: bob, lw: DS.w.mid * 2.5 });
+    toon(S, tube([[s * 66, -96], [s * 96, -124], [s * 106, -150]], 12, 10).d, "orange", { parent: bob, lw: DS.w.mid * 2.5 });
     const cg = G(S, bob, `rotate(0 ${s * 106} -150)`);
-    DS.shape(S, circ(s * 112, -176, 34, 30), "orange", { t: s0, parent: cg });
-    S.draw(`M${s * 112} -176 L${s * 146} -190`, s0, 0, { c: DS.line(), w: DS.w.mid, parent: cg });
+    toon(S, circ(s * 112, -176, 34, 30), "orange", { t: s0, parent: cg });
+    S.draw(`M${s * 112} -176 L${s * 146} -190`, s0, 0, { c: LN("orange"), w: DS.w.mid, parent: cg });
     claws.push([cg, s]);
   });
-  DS.shape(S, circ(0, -76, 90, 58), "orange", { t: s0, parent: bob });
-  [-1, 1].forEach((s) => { DS.shape(S, circ(s * 32, -160, 18), "white", { t: s0, parent: bob, flat: true, w: "detail" }); S.fill(circ(s * 32 + 3, -157, 9), s0, 0, DS.P.ink[0], 1, bob); });
-  S.draw("M-24 -72 Q0 -50 24 -72", s0, 0, { c: DS.line(), w: DS.w.mid, parent: bob });
+  toon(S, circ(0, -76, 90, 58), "orange", { t: s0, parent: bob });
+  [-1, 1].forEach((s) => { toon(S, circ(s * 32, -160, 18), "white", { t: s0, parent: bob, flat: true, w: "detail" }); S.fill(circ(s * 32 + 3, -157, 9), s0, 0, DS.P.ink[0], 1, bob); });
+  S.draw("M-24 -72 Q0 -50 24 -72", s0, 0, { c: LN("red"), w: DS.w.mid, parent: bob });
   S.fill(circ(-48, -64, 14, 8), s0, 0, DS.c("red", 1), 0.6, bob); S.fill(circ(48, -64, 14, 8), s0, 0, DS.c("red", 1), 0.6, bob);
-  if ((o.t ?? s0) > s0 + 0.05) { fadeIn(S, pos, o.t); fadeIn(S, sh, o.t); }
+  toyFx(pos, 7); if ((o.t ?? s0) > s0 + 0.05) { fadeIn(S, pos, o.t); fadeIn(S, sh, o.t); }
   return { pos, bob, clap: (t0) => claws.forEach(([cg, s]) => tw(cg, t0, 0.32, `rotate(0 ${s * 106} -150)`, `rotate(${-28 * s} ${s * 106} -150)`, hump(1))),
     dance: (t0, t1) => tw(bob, t0, t1 - t0, "translate(0 0)", "translate(0 -12)", hump(cyc(t1 - t0, BEAT))) };
 };
 const star = (S, x, gy, k = 1, o = {}) => {
   const s0 = S.start, sh = DS.shadow(S, x, gy, 200 * k), pos = G(S, null, `translate(${x} ${gy}) scale(${k})`), bob = G(S, pos, "rotate(0 0 -80)");
   const pts = Array.from({ length: 10 }, (_, i) => { const a = -Math.PI / 2 + (i * Math.PI) / 5, r = i % 2 ? 44 : 92; return [Math.cos(a) * r, -84 + Math.sin(a) * r]; });
-  DS.shape(S, smooth([...pts, pts[0], pts[1]]) + " Z", "yellow", { t: s0, parent: bob });
-  [-1, 1].forEach((s) => { DS.shape(S, circ(s * 18, -92, 12, 14), "white", { t: s0, parent: bob, flat: true, w: "detail" }); S.fill(circ(s * 18 + 2, -89, 7), s0, 0, DS.P.ink[0], 1, bob); });
-  S.draw("M-14 -66 Q0 -54 14 -66", s0, 0, { c: DS.line(), w: DS.w.mid, parent: bob });
+  toon(S, smooth([...pts, pts[0], pts[1]]) + " Z", "yellow", { t: s0, parent: bob });
+  [-1, 1].forEach((s) => { toon(S, circ(s * 18, -92, 12, 14), "white", { t: s0, parent: bob, flat: true, w: "detail" }); S.fill(circ(s * 18 + 2, -89, 7), s0, 0, DS.P.ink[0], 1, bob); });
+  S.draw("M-14 -66 Q0 -54 14 -66", s0, 0, { c: LN("red"), w: DS.w.mid, parent: bob });
   [[0, -150], [64, -104], [40, -30], [-40, -30], [-64, -104]].forEach(([dx, dy]) => S.fill(circ(dx, dy, 6), s0, 0, DS.c("orange", 1), 0.9, bob));
-  if ((o.t ?? s0) > s0 + 0.05) { fadeIn(S, pos, o.t); fadeIn(S, sh, o.t); }
+  toyFx(pos, 7); if ((o.t ?? s0) > s0 + 0.05) { fadeIn(S, pos, o.t); fadeIn(S, sh, o.t); }
   return { pos, bob, dance: (t0, t1) => tw(bob, t0, t1 - t0, "rotate(0 0 -80)", "rotate(10 0 -80)", wave(cyc(t1 - t0, 2 * BEAT))) };
 };
 const turtle = (S, x, gy, k = 1, o = {}) => {
   const s0 = S.start, sh = DS.shadow(S, x, gy, 320 * k), pos = G(S, null, `translate(${x} ${gy}) scale(${k})`), bob = G(S, pos, "translate(0 0)");
-  DS.shape(S, circ(-86, -16, 38, 17), "grass", { t: s0, parent: bob }); DS.shape(S, circ(80, -16, 38, 17), "grass", { t: s0, parent: bob });
-  DS.shape(S, circ(128, -84, 44, 40), "grass", { t: s0, parent: bob });
-  DS.shape(S, circ(142, -94, 12), "white", { t: s0, parent: bob, flat: true, w: "detail" }); S.fill(circ(145, -92, 7), s0, 0, DS.P.ink[0], 1, bob);
-  S.draw("M124 -66 Q138 -56 154 -68", s0, 0, { c: DS.line(), w: DS.w.mid, parent: bob });
-  DS.shape(S, "M-128 -34 C-128 -166 128 -166 128 -34 Z", "green", { t: s0, parent: bob });
+  toon(S, circ(-86, -16, 38, 17), "grass", { t: s0, parent: bob }); toon(S, circ(80, -16, 38, 17), "grass", { t: s0, parent: bob });
+  toon(S, circ(128, -84, 44, 40), "grass", { t: s0, parent: bob });
+  toon(S, circ(142, -94, 12), "white", { t: s0, parent: bob, flat: true, w: "detail" }); S.fill(circ(145, -92, 7), s0, 0, DS.P.ink[0], 1, bob);
+  S.draw("M124 -66 Q138 -56 154 -68", s0, 0, { c: LN("red"), w: DS.w.mid, parent: bob });
+  toon(S, "M-128 -34 C-128 -166 128 -166 128 -34 Z", "green", { t: s0, parent: bob });
   S.draw(poly(Array.from({ length: 7 }, (_, i) => [Math.cos((i * Math.PI) / 3) * 34, -92 + Math.sin((i * Math.PI) / 3) * 30])), s0, 0, { c: DS.c("green", 2), w: DS.w.mid, parent: bob });
-  DS.shape(S, rrect(-136, -42, 272, 24, DS.r.sm), "sand", { t: s0, parent: bob, w: "mid" });
-  if ((o.t ?? s0) > s0 + 0.05) { fadeIn(S, pos, o.t); fadeIn(S, sh, o.t); }
+  toon(S, rrect(-136, -42, 272, 24, DS.r.sm), "sand", { t: s0, parent: bob, w: "mid" });
+  toyFx(pos, 7); if ((o.t ?? s0) > s0 + 0.05) { fadeIn(S, pos, o.t); fadeIn(S, sh, o.t); }
   return { pos, bob, dance: (t0, t1) => tw(bob, t0, t1 - t0, "translate(0 0)", "translate(0 -10)", hump(cyc(t1 - t0, 2 * BEAT))) };
 };
 
@@ -232,32 +264,36 @@ const tapWater = (S, t, x = 1179, y0 = 646, y1 = 744) => { const [, g] = popIn(S
 // ---------- Bibi: Ollie's best friend, a round pink bunny with a yellow bow (from 04 Bubble Hands) ----------
 const bibiFace = (S, x, y, k, mood, g) => {
   [-1, 1].forEach((s) => {
-    if (mood === "joy") S.draw(arc(x + s * 46 * k, y + 2 * k, 20 * k, 200, 340), S.start, 0, { c: DS.c("ink"), w: DS.w.near, parent: g });
+    if (mood === "joy") S.draw(arc(x + s * 46 * k, y + 2 * k, 20 * k, 200, 340), S.start, 0, { c: LN("pink"), w: DS.w.near, parent: g });
     else { S.fill(circ(x + s * 46 * k, y - 6 * k, 20 * k, 26 * k), S.start, 0, DS.c("ink"), 1, g); S.fill(circ(x + s * 46 * k + 7 * k, y - 15 * k, 7 * k), S.start, 0, DS.P.white[0], 1, g); }
     S.fill(circ(x + s * 82 * k, y + 30 * k, 22 * k, 14 * k), S.start, 0, DS.c("red", 1), 0.45, g);
   });
   S.fill(circ(x, y + 24 * k, 12 * k, 9 * k), S.start, 0, DS.c("pink", 2), 1, g);
-  S.draw(`M${K(x - 30 * k)} ${K(y + 46 * k)} Q${K(x)} ${K(y + 104 * k)} ${K(x + 30 * k)} ${K(y + 46 * k)} Z`, S.start, 0, { fill: DS.c("red", 2), c: DS.c("ink"), w: DS.w.detail, parent: g });
+  S.draw(`M${K(x - 30 * k)} ${K(y + 46 * k)} Q${K(x)} ${K(y + 104 * k)} ${K(x + 30 * k)} ${K(y + 46 * k)} Z`, S.start, 0, { fill: DS.c("red", 2), c: LN("red"), w: DS.w.detail, parent: g });
   S.fill(circ(x, y + 64 * k, 13 * k, 7 * k), S.start, 0, DS.c("pink", 1), 1, g);
 };
 // an arm + paw from Bibi's shoulder to (px, py); returns its group (rotate it about g.sh to wave)
 const bibiArm = (S, B, side, px, py, t) => { const [g, in_] = popIn(S, t ?? S.start, px, py, B.g), k = B.k, sx = B.x + side * 82 * k, sy = B.hy + 150 * k;
-  DS.shape(S, cap(sx, sy, px, py, 30 * k), "pink", { parent: in_ });
-  DS.shape(S, circ(px, py, 46 * k, 42 * k), "pink", { parent: in_ });
-  [-1, 1].forEach((s) => S.draw(`M${K(px + s * 16 * k)} ${K(py + 18 * k)} V${K(py + 38 * k)}`, S.start, 0, { c: DS.c("ink"), w: DS.w.detail, parent: in_ }));
+  toonBack(S, cap(sx, sy, px, py, 30 * k) + " " + circ(px, py, 46 * k, 42 * k), "pink", in_, LW * k);
+  toonFill(S, cap(sx, sy, px, py, 30 * k) + " " + circ(px, py, 46 * k, 42 * k), "pink", in_);
+  [-1, 1].forEach((s) => S.draw(`M${K(px + s * 16 * k)} ${K(py + 18 * k)} V${K(py + 38 * k)}`, S.start, 0, { c: LN("pink"), w: DS.w.detail, parent: in_ }));
   g.sh = `${K(sx)} ${K(sy)}`; return g; };
 // x = centre, hy = head centre y; o: { k, mood: "joy", paws: [[lx, ly], [rx, ry]] (null = no arm) }
 const bibi = (S, x, hy, o = {}) => {
   const k = o.k || 1, g = S.grp(), B = { g, k, x, hy };
-  [[-1, -12], [1, 10]].forEach(([s, rot]) => { const eg = S.grp(g), ex = x + s * 56 * k, ey = hy - 150 * k; eg.setAttribute("transform", `rotate(${rot} ${K(ex)} ${K(ey + 90 * k)})`);
-    DS.shape(S, circ(ex, ey, 36 * k, 98 * k), "pink", { parent: eg }); S.fill(circ(ex, ey + 10 * k, 16 * k, 66 * k), S.start, 0, DS.c("pink", 2), 0.7, eg); });
-  DS.shape(S, circ(x, hy + 200 * k, 130 * k, 125 * k), "pink", { parent: g });
+  const ear = (fn) => [[-1, -12], [1, 10]].forEach(([s, rot]) => { const eg = S.grp(g), ex = x + s * 56 * k, ey = hy - 150 * k; eg.setAttribute("transform", `rotate(${rot} ${K(ex)} ${K(ey + 90 * k)})`); fn(eg, ex, ey); });
+  const BODY = circ(x, hy + 200 * k, 130 * k, 125 * k) + " " + circ(x, hy, 128 * k, 114 * k); // body + head = one silhouette with the ears
+  ear((eg, ex, ey) => toonBack(S, circ(ex, ey, 36 * k, 98 * k), "pink", eg, LW * k));
+  toonBack(S, BODY, "pink", g, LW * k);
+  ear((eg, ex, ey) => { toonFill(S, circ(ex, ey, 36 * k, 98 * k), "pink", eg); S.fill(circ(ex, ey + 10 * k, 16 * k, 66 * k), S.start, 0, DS.c("pink", 2), 0.55, eg); });
+  toonFill(S, BODY, "pink", g);
   S.fill(circ(x, hy + 222 * k, 80 * k, 84 * k), S.start, 0, DS.P.white[0], 0.8, g);
-  DS.shape(S, circ(x, hy, 128 * k, 114 * k), "pink", { parent: g });
+  S.fill(circ(x - 52 * k, hy - 62 * k, 34 * k, 16 * k), S.start, 0, DS.P.white[0], 0.6, g);
   bibiFace(S, x, hy, k, o.mood, g);
   const bx = x + 70 * k, by = hy - 104 * k; // yellow bow = Bibi's signature
-  [-1, 1].forEach((s) => DS.shape(S, `M${K(bx)} ${K(by)} L${K(bx + s * 46 * k)} ${K(by - 26 * k)} Q${K(bx + s * 58 * k)} ${K(by)} ${K(bx + s * 46 * k)} ${K(by + 26 * k)} Z`, "yellow", { parent: g, w: "mid" }));
-  DS.shape(S, circ(bx, by, 13 * k), "yellow", { parent: g, w: "mid" });
+  [-1, 1].forEach((s) => toon(S, `M${K(bx)} ${K(by)} L${K(bx + s * 46 * k)} ${K(by - 26 * k)} Q${K(bx + s * 58 * k)} ${K(by)} ${K(bx + s * 46 * k)} ${K(by + 26 * k)} Z`, "yellow", { parent: g, lw: DS.w.mid * 2.5 * k }));
+  toon(S, circ(bx, by, 13 * k), "yellow", { parent: g, lw: DS.w.mid * 2.5 * k });
+  toyFx(g, 9 * k);
   const [l, r] = o.paws || [[x - 110 * k, hy + 290 * k], [x + 110 * k, hy + 290 * k]];
   if (l) B.L = bibiArm(S, B, -1, l[0], l[1]);
   if (r) B.R = bibiArm(S, B, 1, r[0], r[1]);
@@ -275,3 +311,29 @@ const toothbrush = (S, x0, y0, x1, y1, o = {}) => {
   if (o.foam !== false) [[0, 0, 15], [-16, -8, 11], [14, -10, 10], [4, -22, 9]].forEach(([dx, dy, r]) => S.draw(circ(bx + dx - nx * 18, by + dy - ny * 18, r), S.start, 0, { fill: DS.P.white[0], c: DS.c("sky", 2), w: DS.w.hair, parent: g }));
   return g;
 };
+
+// ---------- Puppy (added for 30 This Old Man): a round brown pup with floppy ears and a wagging tail; sits on the ground at (x, gy) ----------
+// returns { pos, bob, wag(t0, t1), hop(t0, h) }
+const puppy = (S, x, gy, k = 1, o = {}) => {
+  const s0 = S.start, sh = DS.shadow(S, x, gy, 250 * k), pos = G(S, null, `translate(${x} ${gy}) scale(${k})`), bob = G(S, pos, "translate(0 0)");
+  const tail = G(S, bob, "rotate(0 70 -50)");
+  toon(S, tube([[62, -44], [96, -70], [112, -112]], 13, 9).d, "wood", { parent: tail, lw: DS.w.mid * 2.5 });
+  toon(S, circ(-52, -22, 30, 22), "wood", { t: s0, parent: bob }); toon(S, circ(52, -22, 30, 22), "wood", { t: s0, parent: bob });
+  toon(S, circ(0, -84, 78, 74), "wood", { t: s0, parent: bob });
+  S.fill(circ(0, -60, 42, 48), s0, 0, DS.P.white[0], 0.85, bob);
+  toon(S, circ(-30, -22, 24, 26), "white", { t: s0, parent: bob, flat: true, w: "mid" }); toon(S, circ(30, -22, 24, 26), "white", { t: s0, parent: bob, flat: true, w: "mid" });
+  [-1, 1].forEach((s) => toon(S, circ(s * 74, -192, 28, 52), "wood", { t: s0, parent: bob, tone: 2 }));
+  toon(S, circ(0, -178, 74, 68), "wood", { t: s0, parent: bob });
+  S.fill(circ(-30, -214, 26, 12), s0, 0, DS.P.white[0], 0.55, bob);
+  toon(S, circ(0, -150, 40, 30), "white", { t: s0, parent: bob, flat: true, w: "mid" });
+  [-1, 1].forEach((s) => { toon(S, circ(s * 30, -190, 17), "white", { t: s0, parent: bob, flat: true, w: "detail" }); S.fill(circ(s * 30 + 2, -187, 9), s0, 0, DS.P.ink[0], 1, bob); S.fill(circ(s * 30 - 2, -192, 3), s0, 0, DS.P.white[0], 1, bob); });
+  S.fill(circ(0, -164, 14, 9), s0, 0, DS.P.ink[0], 1, bob);
+  S.draw("M-20 -146 Q0 -130 20 -146", s0, 0, { c: LN("red"), w: DS.w.mid, parent: bob });
+  S.fill(circ(0, -134, 10, 14), s0, 0, DS.c("red", 1), 1, bob);
+  toyFx(pos, 7); if ((o.t ?? s0) > s0 + 0.05) { fadeIn(S, pos, o.t); fadeIn(S, sh, o.t); }
+  return { pos, bob, x, gy, k,
+    wag: (t0, t1) => tw(tail, t0, t1 - t0, "rotate(-14 70 -50)", "rotate(22 70 -50)", wave(cyc(t1 - t0, BEAT))),
+    hop: (t0, h = 40) => tw(bob, t0, 0.5, "translate(0 0)", `translate(0 ${-h})`, hump(1)) };
+};
+// a cartoon bone centred on (0, 0): put it inside your own group
+const bone = (S, parent, k = 1) => toon(S, cap(-50 * k, 0, 50 * k, 0, 16 * k) + " " + [[-62, -14], [-62, 14], [62, -14], [62, 14]].map(([a, b]) => circ(a * k, b * k, 17 * k)).join(" "), "white", { parent, lw: DS.w.mid * 2.5 });
