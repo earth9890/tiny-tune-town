@@ -1,0 +1,88 @@
+◆  Capturing 36 frames at [2s, 9.72s, 13.53s, 17.81s, 21.88s, 25.72s, 34.28s, 37.45s, 42.79s, 46.1s, 49.18s, 58.03s, 62.1s, 66.6s, 70.59s, 73.82s, 78.24s, 81.54s, 85.65s, 89.8s, 93.44s, 98.27s, 102.36s, 106.26s, 110.47s, 113.7s, 123.47s, 127.31s, 131.5s, 135.41s, 139.24s, 148.51s, 153.01s, 156.34s, 168s, 173.5s] from 70-a-for-apple
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)")
+
+   Fonts: 5 loaded
+   Note: added an end-of-timeline frame at 174.55s. Short beats between your --at times may still be skipped — pass them explicitly.
+[hyperframes] snapshot: frame 1/37 at 2s
+[hyperframes] snapshot: frame 2/37 at 9.72s
+[hyperframes] snapshot: frame 3/37 at 13.53s
+[hyperframes] snapshot: frame 4/37 at 17.81s
+[hyperframes] snapshot: frame 5/37 at 21.88s
+[hyperframes] snapshot: frame 6/37 at 25.72s
+[hyperframes] snapshot: frame 7/37 at 34.28s
+[hyperframes] snapshot: frame 8/37 at 37.45s
+[hyperframes] snapshot: frame 9/37 at 42.79s
+[hyperframes] snapshot: frame 10/37 at 46.1s
+[hyperframes] snapshot: frame 11/37 at 49.18s
+[hyperframes] snapshot: frame 12/37 at 58.03s
+[hyperframes] snapshot: frame 13/37 at 62.1s
+[hyperframes] snapshot: frame 14/37 at 66.6s
+[hyperframes] snapshot: frame 15/37 at 70.59s
+[hyperframes] snapshot: frame 16/37 at 73.82s
+[hyperframes] snapshot: frame 17/37 at 78.24s
+[hyperframes] snapshot: frame 18/37 at 81.54s
+[hyperframes] snapshot: frame 19/37 at 85.65s
+[hyperframes] snapshot: frame 20/37 at 89.8s
+[hyperframes] snapshot: frame 21/37 at 93.44s
+[hyperframes] snapshot: frame 22/37 at 98.27s
+[hyperframes] snapshot: frame 23/37 at 102.36s
+[hyperframes] snapshot: frame 24/37 at 106.26s
+[hyperframes] snapshot: frame 25/37 at 110.47s
+[hyperframes] snapshot: frame 26/37 at 113.7s
+[hyperframes] snapshot: frame 27/37 at 123.47s
+[hyperframes] snapshot: frame 28/37 at 127.31s
+[hyperframes] snapshot: frame 29/37 at 131.5s
+[hyperframes] snapshot: frame 30/37 at 135.41s
+[hyperframes] snapshot: frame 31/37 at 139.24s
+[hyperframes] snapshot: frame 32/37 at 148.51s
+[hyperframes] snapshot: frame 33/37 at 153.01s
+[hyperframes] snapshot: frame 34/37 at 156.34s
+[hyperframes] snapshot: frame 35/37 at 168s
+[hyperframes] snapshot: frame 36/37 at 173.5s
+[hyperframes] snapshot: frame 37/37 at 174.55s
+   Revision: none (inputs-changed)
+   State: /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/video-state.json
+
+◇  37 snapshots saved to /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-00-at-2s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-01-at-9.72s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-02-at-13.53s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-03-at-17.81s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-04-at-21.88s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-05-at-25.72s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-06-at-34.28s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-07-at-37.45s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-08-at-42.79s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-09-at-46.1s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-10-at-49.18s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-11-at-58.03s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-12-at-62.1s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-13-at-66.6s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-14-at-70.59s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-15-at-73.82s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-16-at-78.24s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-17-at-81.54s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-18-at-85.65s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-19-at-89.8s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-20-at-93.44s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-21-at-98.27s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-22-at-102.36s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-23-at-106.26s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-24-at-110.47s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-25-at-113.7s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-26-at-123.47s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-27-at-127.31s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-28-at-131.5s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-29-at-135.41s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-30-at-139.24s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-31-at-148.51s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-32-at-153.01s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-33-at-156.34s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-34-at-168s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-35-at-173.5s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/frame-36-at-174.55s.png
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/contact-sheet-1.jpg (grid view for AI review)
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/contact-sheet-2.jpg (grid view for AI review)
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/contact-sheet-3.jpg (grid view for AI review)
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/contact-sheet-4.jpg (grid view for AI review)
+   /Users/harish/videos/tiny-tune-town/songs/70-a-for-apple/.hyperframes/artifacts/snapshots/ef22f7f5-62c1-4d89-8275-e93dde1e7135/contact-sheet-5.jpg (grid view for AI review)

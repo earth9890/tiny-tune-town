@@ -1,0 +1,23 @@
+# n: (sung syllables, short English meaning). Order and Arabic from assabile.com/asma-ul-husna (names99.json); meanings shortened for kids.
+D = {
+1:("Al-laah","the One God"),2:("Ar-Rah-maan","the Most Kind"),3:("Ar-Ra-heem","the Most Merciful"),4:("Al-Ma-lik","the King"),5:("Al-Qud-doos","the Pure and Perfect"),
+6:("As-Sa-laam","the Peace"),7:("Al-Mu-min","who keeps us safe"),8:("Al-Muhay-min","the Watchful Guardian"),9:("Al-A-zeez","the Mighty"),10:("Al-Jab-baar","the Strong"),
+11:("Al-Mu-ta-kab-bir","the Supreme"),12:("Al-Kha-liq","the Creator"),13:("Al-Ba-ri","the Maker"),14:("Al-Mu-saw-wir","who gives each its shape"),15:("Al-Ghaf-faar","the Forgiver"),
+16:("Al-Qah-haar","the Overpowering"),17:("Al-Wah-haab","the Giver"),18:("Ar-Raz-zaaq","the Provider"),19:("Al-Fat-taah","the Opener"),20:("Al-A-leem","the All-Knowing"),
+21:("Al-Qaa-bid","who holds"),22:("Al-Baa-sit","who gives plenty"),23:("Al-Khaa-fid","who lowers"),24:("Ar-Raa-fi","who lifts up"),25:("Al-Mu-izz","who gives honour"),
+26:("Al-Mu-dhill","who humbles"),27:("As-Sa-mee","the All-Hearing"),28:("Al-Ba-seer","the All-Seeing"),29:("Al-Ha-kam","the Judge"),30:("Al-Adl","the Fair"),
+31:("Al-La-teef","the Gentle"),32:("Al-Kha-beer","the All-Aware"),33:("Al-Ha-leem","the Patient"),34:("Al-A-zeem","the Magnificent"),35:("Al-Gha-foor","the Forgiving"),
+36:("Ash-Sha-koor","the Thankful"),37:("Al-A-liy","the High"),38:("Al-Ka-beer","the Great"),39:("Al-Ha-feez","the Protector"),40:("Al-Mu-qeet","the Sustainer"),
+41:("Al-Ha-seeb","the Reckoner"),42:("Al-Ja-leel","the Noble"),43:("Al-Ka-reem","the Generous"),44:("Ar-Ra-qeeb","the Watcher"),45:("Al-Mu-jeeb","who answers"),
+46:("Al-Waa-si","the Vast"),47:("Al-Ha-keem","the Wise"),48:("Al-Wa-dood","the Loving"),49:("Al-Ma-jeed","the Glorious"),50:("Al-Baa-ith","who raises up"),
+51:("Ash-Sha-heed","the Witness"),52:("Al-Haqq","the Truth"),53:("Al-Wa-keel","the Trusted Carer"),54:("Al-Qaw-wiy","the Powerful"),55:("Al-Ma-teen","the Firm"),
+56:("Al-Wa-liy","the Protecting Friend"),57:("Al-Ha-meed","the Praised"),58:("Al-Muh-see","who counts all"),59:("Al-Mub-di","the Starter"),60:("Al-Mu-eed","who brings back"),
+61:("Al-Muh-yee","the Giver of Life"),62:("Al-Mu-meet","who ends life"),63:("Al-Hayy","the Ever-Living"),64:("Al-Qay-yoom","the Self-Sustaining"),65:("Al-Waa-jid","the Rich"),
+66:("Al-Maa-jid","the Noble"),67:("Al-Waa-hid","the One"),68:("As-Sa-mad","the One we need"),69:("Al-Qaa-dir","the Able"),70:("Al-Muq-ta-dir","the All-Powerful"),
+71:("Al-Mu-qad-dim","who brings forward"),72:("Al-Mu-akh-khir","who puts back"),73:("Al-Aw-wal","the First"),74:("Al-Aa-khir","the Last"),75:("Az-Zaa-hir","the Clear"),
+76:("Al-Baa-tin","the Hidden"),77:("Al-Waa-li","the Governor"),78:("Al-Mu-ta-aal","the Most High"),79:("Al-Barr","the Kind Giver"),80:("At-Taw-waab","who accepts sorry"),
+81:("Al-Mun-ta-qim","the Fair Judge"),82:("Al-Af-uw","the Pardoner"),83:("Ar-Ra-oof","the Caring"),84:("Maa-lik-ul-Mulk","Owner of all"),85:("Dhul-Ja-laa-li wal-Ik-raam","Full of Majesty and Honour"),
+86:("Al-Muq-sit","the Fair"),87:("Al-Jaa-mi","the Gatherer"),88:("Al-Gha-niy","the Rich Beyond Need"),89:("Al-Mugh-ni","who gives enough"),90:("Al-Maa-ni","who protects"),
+91:("Ad-Daar","who allows harm"),92:("An-Naa-fi","who gives good"),93:("An-Noor","the Light"),94:("Al-Haa-di","the Guide"),95:("Al-Ba-dee","the Original Maker"),
+96:("Al-Baa-qi","the Everlasting"),97:("Al-Waa-rith","the Inheritor"),98:("Ar-Ra-sheed","the Right Guide"),99:("As-Sa-boor","the Most Patient"),
+}

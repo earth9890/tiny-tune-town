@@ -1,0 +1,12 @@
+// look: still
+// @include ../../../tools/cast.js
+// 12 Names of Ganesha, concept B3. Critique round 2 (1-5): focal 4, emotion 4, curiosity 3, contrast 4 (white/red text on saffron), text 4, composition 4, polish 4, honesty 5, brand 4.
+const S = scene(0, 1, { cam: "none" });
+S.fill("M-200 -200 H2120 V1280 H-200 Z", 0, 0, DS.c("orange", 1), 1);
+S.fill("M-200 700 H2120 V1280 H-200 Z", 0, 0, DS.c("red", 1), 0.35);
+S.fill(circ(640, 560, 760, 620), 0, 0, DS.glow(DS.P.yellow[1], 0.95), 1);
+for (let i = 0; i < 12; i++) { const mx = 60 + i * 170, my = 60 + (i % 2) * 46; S.fill(circ(mx, my, 30), 0, 0, DS.c("orange", 0), 1); S.fill(circ(mx, my, 16), 0, 0, DS.c("yellow", 0), 1); S.draw(`M${mx} ${my - 30} V-20`, 0, 0, { c: DS.c("green", 0), w: DS.w.mid }); }
+ganesha(S, 640, 1030, 1.3);
+kidTilak(S, 1560, 470, { k: 1.05, mood: "joy", pose: "wave" });
+S.text("12 NAMES", 1470, 280, { size: 170, c: DS.P.white[0], halo: DS.P.red[2], haloW: 0.16 });
+DS.shape(S, rrect(40, 950, 520, 96, 48), "white", { w: "mid" }); S.text("Tiny Tune Town", 300, 1020, { size: 56, c: DS.P.orange[2] });

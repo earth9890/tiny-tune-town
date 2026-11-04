@@ -1,0 +1,596 @@
+[
+[
+1,
+"اللَّهُ",
+"Allah",
+"The One Who is truly venerated and worshipped, the One deserving that He be singled out with all worship because of His perfect attributes of divinity"
+],
+[
+2,
+"الرَّحْمَنُ",
+"Ar-Rahman",
+"The Extremely Merciful"
+],
+[
+3,
+"الرَّحِيمُ",
+"Ar-Rahim",
+"The Bestower of mercy"
+],
+[
+4,
+"الْمَلِكُ",
+"Al-Malik",
+"The King"
+],
+[
+5,
+"الْقُدُّوسُ",
+"Al-Quddus",
+"The Pure and Perfect"
+],
+[
+6,
+"السَّلَامُ",
+"As-Salam",
+"The Impeccable One or Flawless One"
+],
+[
+7,
+"الْمُؤْمِنُ",
+"Al-Mu’min",
+"The True and Trustworthy, The Granter of security"
+],
+[
+8,
+"الْمُهَيْمِنُ",
+"Al-Muhaymin",
+"The Trustworthy and Ever Watchful Witness"
+],
+[
+9,
+"الْعَزِيزُ",
+"Al-Aziz",
+"The Almighty or the Invincible"
+],
+[
+10,
+"الْجَبَّارُ",
+"Al-Jabbar",
+"The Exalted and Almighty Compeller"
+],
+[
+11,
+"الْمُتَكَبِّرُ",
+"Al-Mutakabbir",
+"The One Supreme in Glory, The justly and rightfully proud"
+],
+[
+12,
+"الْخَالِقُ",
+"Al-Khaliq",
+"The Creator and Maker of everything"
+],
+[
+13,
+"الْبَارِئُ",
+"Al-Bari’",
+"The Originator"
+],
+[
+14,
+"الْمُصَوِّرُ",
+"Al-Musawwir",
+"The Bestower of forms"
+],
+[
+15,
+"الْغَفَّارُ",
+"Al-Ghaffar",
+"The Oft-forgiving"
+],
+[
+16,
+"الْقَهَّارُ",
+"Al-Qahhar",
+"The Overwhelming Subduer Who is never overcome"
+],
+[
+17,
+"الْوَهَّابُ",
+"Al-Wahhab",
+"The Bestower"
+],
+[
+18,
+"الرَّزَّاقُ",
+"Ar-Razzaq",
+"The Great Provider"
+],
+[
+19,
+"الْفَتَّاحُ",
+"Al-Fattah",
+"The Judge and Opener Who distinguishes the truth from falsehood"
+],
+[
+20,
+"الْعَلِيمُ",
+"Al-Alim",
+"The All-Knowing"
+],
+[
+21,
+"الْقَابِضُ",
+"Al-Qabid",
+"The Withholder"
+],
+[
+22,
+"الْبَاسِطُ",
+"Al-Basit",
+"The Granter of ample provision"
+],
+[
+23,
+"الْخَافِضُ",
+"Al-Khafid",
+"The Abaser"
+],
+[
+24,
+"الرَّافِعُ",
+"Ar-Rafi",
+"The Exalter"
+],
+[
+25,
+"الْمُعِزُّ",
+"Al-Muizz",
+"The Bestower of Honour"
+],
+[
+26,
+"الْمُذِلُّ",
+"Al-Mudhill",
+"The Humiliator"
+],
+[
+27,
+"السَّمِيعُ",
+"As-Sami",
+"The All-Hearing"
+],
+[
+28,
+"الْبَصِيرُ",
+"Al-Basir",
+"The All-Seeing"
+],
+[
+29,
+"الْحَكَمُ",
+"Al-Hakam",
+"The Judge"
+],
+[
+30,
+"الْعَدْلُ",
+"Al-Adl",
+"The Just"
+],
+[
+31,
+"اللَّطِيفُ",
+"Al-Latif",
+"The Subtle and Kind"
+],
+[
+32,
+"الْخَبِيرُ",
+"Al-Khabir",
+"The Fully Aware"
+],
+[
+33,
+"الْحَلِيمُ",
+"Al-Halim",
+"The Forbearing"
+],
+[
+34,
+"الْعَظِيمُ",
+"Al-Azim",
+"The Tremendous One or the Magnificent"
+],
+[
+35,
+"الْغَفُورُ",
+"Al-Ghafur",
+"The One Who forgives extensively"
+],
+[
+36,
+"الشَّكُورُ",
+"Ash-Shakur",
+"The One most ready to appreciate and reward abundantly"
+],
+[
+37,
+"الْعَلِيُّ",
+"Al-Aliyy",
+"The Exalted"
+],
+[
+38,
+"الْكَبِيرُ",
+"Al-Kabir",
+"The Incomparably Great"
+],
+[
+39,
+"الْحَفِيظُ",
+"Al-Hafiz",
+"The Guardian"
+],
+[
+40,
+"الْمُقِيتُ",
+"Al-Muqit",
+"The All-Powerful Maintainer"
+],
+[
+41,
+"الْحَسِيبُ",
+"Al-Hasib",
+"The Reckoner Who suffices"
+],
+[
+42,
+"الْجَلِيلُ",
+"Al-Jalil",
+"The Noble"
+],
+[
+43,
+"الْكَرِيمُ",
+"Al-Karim",
+"The Bountiful, The Generous One Abundant in good"
+],
+[
+44,
+"الرَّقِيبُ",
+"Ar-Raqib",
+"The Ever Watchful Guardian"
+],
+[
+45,
+"الْمُجِيبُ",
+"Al-Mujib",
+"The Responsive"
+],
+[
+46,
+"الْوَاسِعُ",
+"Al-Wasi",
+"The Vast One"
+],
+[
+47,
+"الْحَكِيمُ",
+"Al-Hakim",
+"The One fully Wise"
+],
+[
+48,
+"الْوَدُودُ",
+"Al-Wadud",
+"The Loving One and the Beloved One"
+],
+[
+49,
+"الْمَجِيدُ",
+"Al-Majid",
+"The One Perfect in Glory and Honour"
+],
+[
+50,
+"الْبَاعِثُ",
+"Al-Baith",
+"The Resurrector"
+],
+[
+51,
+"الشَّهِيدُ",
+"Ash-Shahid",
+"The Witness"
+],
+[
+52,
+"الْحَقُّ",
+"Al-Haqq",
+"The True One"
+],
+[
+53,
+"الْوَكِيلُ",
+"Al-Wakil",
+"The Trustworthy Disposer of Affairs"
+],
+[
+54,
+"الْقَوِيُّ",
+"Al-Qawiyy",
+"The One perfect in strength"
+],
+[
+55,
+"الْمَتِينُ",
+"Al-Matin",
+"The Strong"
+],
+[
+56,
+"الْوَلِيُّ",
+"Al-Waliyy",
+"The Guardian Lord"
+],
+[
+57,
+"الْحَمِيدُ",
+"Al-Hamid",
+"The One Who is deservedly praised"
+],
+[
+58,
+"الْمُحْصِي",
+"Al-Muhsi",
+"The All-Enumerating"
+],
+[
+59,
+"الْمُبْدِئُ",
+"Al-Mubdi’",
+"The Starter"
+],
+[
+60,
+"الْمُعِيدُ",
+"Al-Muid",
+"The Recaller, The One Who repeats creation"
+],
+[
+61,
+"الْمُحْيِي",
+"Al-Muhyi",
+"The Giver of Life"
+],
+[
+62,
+"الْمُمِيتُ",
+"Al-Mumit",
+"The Bringer of Death"
+],
+[
+63,
+"الْحَيُّ",
+"Al-Hayy",
+"The Everliving"
+],
+[
+64,
+"الْقَيُّومُ",
+"Al-Qayyum",
+"The Self-Subsisting One Upon Whom everything depends"
+],
+[
+65,
+"الْوَاجِدُ",
+"Al-Wajid",
+"The Rich One Who Lacks Nothing"
+],
+[
+66,
+"الْمَاجِدُ",
+"Al-Majid",
+"The Glorious, Vast in Wealth"
+],
+[
+67,
+"الْوَاحِدُ",
+"Al-Wahid",
+"The One and Only"
+],
+[
+68,
+"الصَّمَدُ",
+"As-Samad",
+"The Perfect Lord and Master upon Whom the whole of creation depends"
+],
+[
+69,
+"الْقَادِرُ",
+"Al-Qadir",
+"The Fully Able One"
+],
+[
+70,
+"الْمُقْتَدِرُ",
+"Al-Muqtadir",
+"The Omnipotent"
+],
+[
+71,
+"الْمُقَدِّمُ",
+"Al-Muqaddim",
+"The One Who gives precedence"
+],
+[
+72,
+"الْمُؤَخِّرُ",
+"Al-Mu’akhkhir",
+"The One Who puts back"
+],
+[
+73,
+"الْأَوَّلُ",
+"Al-Awwal",
+"The First"
+],
+[
+74,
+"الْآخِرُ",
+"Al-Akhir",
+"The Last"
+],
+[
+75,
+"الظَّاهِرُ",
+"Az-Zahir",
+"The Uppermost One"
+],
+[
+76,
+"الْبَاطِنُ",
+"Al-Batin",
+"The Innermost One"
+],
+[
+77,
+"الْوَالِي",
+"Al-Wali",
+"The Governor"
+],
+[
+78,
+"الْمُتَعَالِي",
+"Al-Mutaali",
+"The Supreme and Exalted One"
+],
+[
+79,
+"الْبَرُّ",
+"Al-Barr",
+"The Most Benign and Kind"
+],
+[
+80,
+"التَّوَّابُ",
+"At-Tawwab",
+"The One Who guides His servants to repent and accepts their repentance"
+],
+[
+81,
+"الْمُنْتَقِمُ",
+"Al-Muntaqim",
+"The Exactor of Retribution"
+],
+[
+82,
+"الْعَفُوُّ",
+"Al-Afuww",
+"The One Who pardons again and again"
+],
+[
+83,
+"الرَّؤُوفُ",
+"Ar-Ra’uf",
+"The Compassionate and Kind"
+],
+[
+84,
+"مَالِكُ الْمُلْكِ",
+"Malik al-Mulk",
+"The Owner of Sovereignty"
+],
+[
+85,
+"ذُو الْجَلَالِ وَالْإِكْرَامِ",
+"Dhu-l-Jalali wa-l-Ikram",
+"The One possessing Majesty and Honour"
+],
+[
+86,
+"الْمُقْسِطُ",
+"Al-Muqsit",
+"The Equitable"
+],
+[
+87,
+"الْجَامِعُ",
+"Al-Jami",
+"The Gatherer of Mankind"
+],
+[
+88,
+"الْغَنِيُّ",
+"Al-Ghaniyy",
+"The Independent One Who is free of all needs"
+],
+[
+89,
+"الْمُغْنِي",
+"Al-Mughni",
+"The Sufficient"
+],
+[
+90,
+"الْمَانِعُ",
+"Al-Mani",
+"The Preventer"
+],
+[
+91,
+"الضَّارُّ",
+"Ad-Darr",
+"The Bringer of Harm"
+],
+[
+92,
+"النَّافِعُ",
+"An-Nafi",
+"The Bringer of Benefit"
+],
+[
+93,
+"النُّورُ",
+"An-Nur",
+"The Light"
+],
+[
+94,
+"الْهَادِي",
+"Al-Hadi",
+"The Director"
+],
+[
+95,
+"الْبَدِيعُ",
+"Al-Badi",
+"The Originator of the heavens and the earth"
+],
+[
+96,
+"الْبَاقِي",
+"Al-Baqi",
+"The Everlasting"
+],
+[
+97,
+"الْوَارِثُ",
+"Al-Warith",
+"The Inheritor"
+],
+[
+98,
+"الرَّشِيدُ",
+"Ar-Rashid",
+"The Guide"
+],
+[
+99,
+"الصَّبُورُ",
+"As-Sabur",
+"The Most Patient"
+]
+]

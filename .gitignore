@@ -10,8 +10,10 @@ __pycache__/
 .DS_Store
 # rejected ACE-Step takes (the chosen one is copied to assets/voice.wav) and local caches
 **/takes/
+**/takesA/
 .cache/
 *_prev.html
 **/*.nobadge.png
 # demucs stems (regenerable by tools/remix.py)
 **/assets/stems/
+config.bat

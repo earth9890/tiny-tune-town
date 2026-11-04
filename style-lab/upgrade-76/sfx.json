@@ -1,0 +1,4 @@
+[
+  {"t": 8.35, "kind": "pop"}, {"t": 8.85, "kind": "pop"}, {"t": 9.76, "kind": "pop"}, {"t": 10.76, "kind": "pop"},
+  {"from": 13.0, "to": 16.5, "every": 0.5172, "kind": "clap", "snap": true}
+]

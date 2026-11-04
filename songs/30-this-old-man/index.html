@@ -1147,10 +1147,10 @@ const fadeIn = (S, e, t) => { if (t > S.start + 0.05) tl.fromTo(e, { opacity: 0 
 // ---------- soft toy look (2026-10-29 style lab "A + D") ----------
 // One closed outline per creature, in a darker shade of its OWN colour (no black ink), painted UNDER the fill so limbs
 // merge into the body; glossy highlights; white sticker edge + soft shadow come from one filter on the whole character.
-const LN = (name, layer = "near") => DS.mix(DS.c(name, 2, layer), DS.P.ink[0], 0.28);
-const LW = DS.w.near * 3; // stroke width; only the outer half shows (paint-order: stroke)
+const LN = (name, layer = "near") => DS.mix(DS.c(name, 2, layer), DS.P.ink[0], 0.5);
+const LW = DS.w.near * 4; // stroke width; only the outer half shows (paint-order: stroke)
 const toon = (S, d, name, o = {}) => {
-  const e = S.draw(d, o.t ?? S.start, 0, { c: o.c || LN(name, o.layer), w: o.lw || (o.w ? DS.w[o.w] * 2.5 : LW), fill: o.flat ? DS.c(name, o.tone || 0, o.layer) : DS.vol(name, o.layer || "near", o.dir), parent: o.parent, op: o.op });
+  const e = S.draw(d, o.t ?? S.start, 0, { c: o.c || LN(name, o.layer), w: o.lw || (o.w ? DS.w[o.w] * 3.3 : LW), fill: o.flat ? DS.c(name, o.tone || 0, o.layer) : DS.vol(name, o.layer || "near", o.dir), parent: o.parent, op: o.op });
   e.setAttribute("paint-order", "stroke"); return e;
 };
 const toonBack = (S, d, name, parent, lw = LW) => S.draw(d, S.start, 0, { c: LN(name), w: lw, fill: LN(name), parent }); // outline-only layer, under the limbs

@@ -2,6 +2,7 @@
 //   // @include ../../tools/cast.js        (from songs/<slug>/; from thumbnails/ use ../../../tools/cast.js)
 // Ollie = channel hero (pink octopus, logo; .grin() toothy smile, .face = close-up centre). Friends: bibi() bunny, fish(), crab(), star(), turtle().
 // Sets: sea(), coral(), weed(), rock(), shell(), bubbles(); home: DS.room(S, BATH_ROOM), bathWall(), bathSink(), tapWater(), foam(). Helpers: popIn, swing, cap.
+// TOON = 2 (opt-in look upgrade, see the toon section): + O.groove(), dof(S, bg, t, px), fgFrame(S, x, gy, k), grade(S, sun).
 let BEAT = 60 / 110; // songs set their own tempo after the include: BEAT = 60 / 96;
 const cut = (c, i = 0) => W(c, i) - 0.35;
 const wave = (n) => (p) => Math.sin(p * Math.PI * 2 * n);          // rest → +1 → -1 → rest, n times
@@ -14,14 +15,41 @@ const fadeIn = (S, e, t) => { if (t > S.start + 0.05) tl.fromTo(e, { opacity: 0 
 // ---------- soft toy look (2026-10-29 style lab "A + D") ----------
 // One closed outline per creature, in a darker shade of its OWN colour (no black ink), painted UNDER the fill so limbs
 // merge into the body; glossy highlights; white sticker edge + soft shadow come from one filter on the whole character.
-const LN = (name, layer = "near") => DS.mix(DS.c(name, 2, layer), DS.P.ink[0], 0.28);
-const LW = DS.w.near * 3; // stroke width; only the outer half shows (paint-order: stroke)
+const LN = (name, layer = "near") => DS.mix(DS.c(name, 2, layer), DS.P.ink[0], 0.5);
+const LW = DS.w.near * 4; // stroke width; only the outer half shows (paint-order: stroke)
+// TOON = 2 (opt-in, 2026-11 animated-shorts study; songs set `TOON = 2;` after the include, like BEAT; 1 = the published look):
+// thick-thin outline (an offset copy under each shape: thin on the lit top-left, ~2x on the bottom-right shadow side),
+// soft crescent shading (radial: lit top-left, flat middle, cool shade crescent bottom-right), blinks, groove sway.
+let TOON = 1;
+const VOL = (name, layer = "near", dir) => {
+  if (TOON < 2) return DS.vol(name, layer, dir);
+  const id = `ttt-cr-${name}-${layer}`;
+  if (!document.getElementById(id)) {
+    const g = el("radialGradient", { id, cx: 0.36, cy: 0.3, r: 0.8 }, dsDefs());
+    [[0, DS.c(name, 1, layer)], [0.42, DS.c(name, 0, layer)], [0.7, DS.c(name, 0, layer)], [1, DS.mix(DS.c(name, 2, layer), "#5a58c8", 0.14)]].forEach(([o, c]) => el("stop", { offset: o, "stop-color": c }, g));
+  }
+  return `url(#${id})`;
+};
+const thick = (S, d, c, w, t, parent, op) => { if (TOON < 2) return; const e = S.draw(d, t, 0, { c, w, fill: c, parent, op }); e.setAttribute("transform", `translate(${K(w * 0.22)} ${K(w * 0.36)})`); };
 const toon = (S, d, name, o = {}) => {
-  const e = S.draw(d, o.t ?? S.start, 0, { c: o.c || LN(name, o.layer), w: o.lw || (o.w ? DS.w[o.w] * 2.5 : LW), fill: o.flat ? DS.c(name, o.tone || 0, o.layer) : DS.vol(name, o.layer || "near", o.dir), parent: o.parent, op: o.op });
+  const c = o.c || LN(name, o.layer), w = (o.lw || (o.w ? DS.w[o.w] * 3.3 : LW)) * (TOON > 1 ? 0.8 : 1), t = o.t ?? S.start;
+  thick(S, d, c, w, t, o.parent, o.op);
+  const e = S.draw(d, t, 0, { c, w, fill: o.flat ? DS.c(name, o.tone || 0, o.layer) : VOL(name, o.layer || "near", o.dir), parent: o.parent, op: o.op });
   e.setAttribute("paint-order", "stroke"); return e;
 };
-const toonBack = (S, d, name, parent, lw = LW) => S.draw(d, S.start, 0, { c: LN(name), w: lw, fill: LN(name), parent }); // outline-only layer, under the limbs
-const toonFill = (S, d, name, parent) => S.fill(d, S.start, 0, DS.vol(name), 1, parent);                                // fill-only layer, over the limb roots
+const toonBack = (S, d, name, parent, lw = LW) => { if (TOON > 1) lw *= 0.8; thick(S, d, LN(name), lw, S.start, parent); return S.draw(d, S.start, 0, { c: LN(name), w: lw, fill: LN(name), parent }); }; // outline-only layer, under the limbs
+const toonFill = (S, d, name, parent) => S.fill(d, S.start, 0, VOL(name), 1, parent);                                // fill-only layer, over the limb roots
+// TOON 2 blinks: lids (own colour + closed-eye curve) shut for 0.13 s every 2-4.5 s (seeded, so every build is identical).
+// eyes = [[x, y, rx, ry], ...] in the parent's units; skipped for TOON 1 and for eyes that are already closed (joy)
+const hash = (a, b) => { const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return x - Math.floor(x); };
+const blinks = (S, parent, eyes, name, seed = 1, w = DS.w.near) => {
+  if (TOON < 2) return;
+  const g = G(S, parent); g.setAttribute("opacity", 0);
+  eyes.forEach(([x, y, rx, ry]) => { S.fill(circ(x, y, rx * 1.15, ry * 1.12), S.start, 0, DS.c(name, 0), 1, g);
+    S.draw(`M${K(x - rx)} ${K(y + ry * 0.05)} Q${K(x)} ${K(y + ry * 0.6)} ${K(x + rx)} ${K(y + ry * 0.05)}`, S.start, 0, { c: LN(name), w, parent: g }); });
+  for (let t = S.start + 0.6 + 1.5 * hash(seed, S.start), n = 0; t < S.end - 0.4; t += 2 + 2.5 * hash(seed, ++n)) { tl.set(g, { opacity: 1 }, t); tl.set(g, { opacity: 0 }, t + 0.13); }
+  return g;
+};
 const toyFx = (g, r = 9) => {
   const id = "ttt-toy" + Math.round(r * 10);
   if (!document.getElementById(id)) {
@@ -60,7 +88,7 @@ const COUNT = [[0, -1], [0, 1], [1, -1], [1, 1], [2, -1], [2, 1], [3, -1], [3, 1
 const ollie = (S, cx, gy, k = 1, o = {}) => {
   const t = o.t ?? S.start, s0 = S.start, look = o.look || 0;
   const sh = DS.shadow(S, cx, gy, 600 * k);
-  const pos = G(S, null, `translate(${cx} ${gy}) scale(${k})`), lift = G(S, pos, "translate(0 0)"), bob = G(S, lift, "translate(0 0)"), size = G(S, bob, "scale(1)"), body = G(S, size, "rotate(0 0 -250)");
+  const pos = G(S, null, `translate(${cx} ${gy}) scale(${k})`), lift = G(S, pos, "translate(0 0)"), bob = G(S, lift, "translate(0 0)"), size = G(S, bob, "scale(1)"), sway = G(S, size, "rotate(0 0 0)"), body = G(S, sway, "rotate(0 0 -250)");
   const arms = {}, BODY = circ(0, -335, 150, 165); // head; its fill covers the arm roots, so arms grow out of one silhouette
   toonBack(S, BODY, "pink", body);
   [0, 1, 2, 3].forEach((ai) => [-1, 1].forEach((side) => {
@@ -83,6 +111,7 @@ const ollie = (S, cx, gy, k = 1, o = {}) => {
     S.fill(circ(58 * s + look + 8, -309, 4), s0, 0, DS.P.white[0], 1, body);
     S.fill(circ(104 * s, -258, 26, 15), s0, 0, DS.c("red", 1), 0.55, body);
   });
+  blinks(S, body, [[58, -330, 40, 48], [-58, -330, 40, 48]], "pink", cx);
   const smile = S.draw("M-34 -262 Q0 -226 34 -262", s0, 0, { c: LN("red"), w: DS.w.near, parent: body });
   const open = G(S, body); open.setAttribute("opacity", 0);
   S.draw("M-36 -266 Q0 -196 36 -266 Z", s0, 0, { c: LN("red"), w: DS.w.near, fill: DS.c("red", 2), parent: open });
@@ -104,6 +133,8 @@ const ollie = (S, cx, gy, k = 1, o = {}) => {
   O.wiggle = (list, t0, t1, amp = 13, per = BEAT) => list.forEach((n, i) => { const A = all[n - 1]; tw(A.wig, t0, t1 - t0, `rotate(0 ${A.x} ${A.y})`, `rotate(${(i % 2 ? amp : -amp) * A.side} ${A.x} ${A.y})`, wave(cyc(t1 - t0, per))); });
   O.raise = (A, a, t0, dur = 0.6) => { tw(A.pose, t0, dur, `rotate(${A.cur} ${A.x} ${A.y})`, `rotate(${a * A.side} ${A.x} ${A.y})`); A.cur = a * A.side; };
   O.bob = (t0, t1, amp = 10) => tw(bob, t0, t1 - t0, "translate(0 0)", `translate(0 ${-amp})`, hump(cyc(t1 - t0, 2 * BEAT)));
+  // dance cycle: bob on every 2 beats + a lean that swings left/right over 4 beats (lean in phase with the bob, from the study)
+  O.groove = (t0, t1, amp = 10, deg = 4) => { O.bob(t0, t1, amp); tw(sway, t0, t1 - t0, "rotate(0 0 0)", `rotate(${deg} 0 0)`, wave(cyc(t1 - t0, 4 * BEAT))); };
   O.lift = (dy, t0, dur = 0.8) => { tw(lift, t0, dur, `translate(0 ${O.liftY})`, `translate(0 ${dy})`); O.liftY = dy; };
   O.hop = (t0, h = 60, dur = 0.5) => tw(lift, t0, dur, `translate(0 ${O.liftY})`, `translate(0 ${O.liftY - h})`, hump(1));
   O.spin = (t0, dur = 1.3, turns = 1) => tw(body, t0, dur, "rotate(0 0 -250)", `rotate(${360 * turns} 0 -250)`, "power1.inOut");
@@ -135,6 +166,7 @@ const fish = (S, x, y, k = 1, name = "yellow", dir = 1, o = {}) => {
   toon(S, circ(36, -12, 17), "white", { t: s0, parent: bob, flat: true, w: "detail" });
   S.fill(circ(40, -10, 9), s0, 0, DS.P.ink[0], 1, bob); S.fill(circ(37, -14, 3.5), s0, 0, DS.P.white[0], 1, bob);
   S.draw("M34 20 Q46 30 58 16", s0, 0, { c: LN("red"), w: DS.w.mid, parent: bob });
+  blinks(S, bob, [[36, -12, 17, 17]], name, x + y, DS.w.mid);
   toyFx(pos, 7); fadeIn(S, pos, o.t ?? s0);
   const F = { pos, bob, x, y };
   F.swim = (t0, t1, amp = 14) => tw(bob, t0, t1 - t0, "translate(0 0)", `translate(0 ${-amp})`, hump(cyc(t1 - t0, 2 * BEAT)));
@@ -155,6 +187,7 @@ const crab = (S, x, gy, k = 1, o = {}) => {
   toon(S, circ(0, -76, 90, 58), "orange", { t: s0, parent: bob });
   [-1, 1].forEach((s) => { toon(S, circ(s * 32, -160, 18), "white", { t: s0, parent: bob, flat: true, w: "detail" }); S.fill(circ(s * 32 + 3, -157, 9), s0, 0, DS.P.ink[0], 1, bob); });
   S.draw("M-24 -72 Q0 -50 24 -72", s0, 0, { c: LN("red"), w: DS.w.mid, parent: bob });
+  blinks(S, bob, [[-32, -160, 18, 18], [32, -160, 18, 18]], "orange", x, DS.w.mid);
   S.fill(circ(-48, -64, 14, 8), s0, 0, DS.c("red", 1), 0.6, bob); S.fill(circ(48, -64, 14, 8), s0, 0, DS.c("red", 1), 0.6, bob);
   toyFx(pos, 7); if ((o.t ?? s0) > s0 + 0.05) { fadeIn(S, pos, o.t); fadeIn(S, sh, o.t); }
   return { pos, bob, clap: (t0) => claws.forEach(([cg, s]) => tw(cg, t0, 0.32, `rotate(0 ${s * 106} -150)`, `rotate(${-28 * s} ${s * 106} -150)`, hump(1))),
@@ -166,6 +199,7 @@ const star = (S, x, gy, k = 1, o = {}) => {
   toon(S, smooth([...pts, pts[0], pts[1]]) + " Z", "yellow", { t: s0, parent: bob });
   [-1, 1].forEach((s) => { toon(S, circ(s * 18, -92, 12, 14), "white", { t: s0, parent: bob, flat: true, w: "detail" }); S.fill(circ(s * 18 + 2, -89, 7), s0, 0, DS.P.ink[0], 1, bob); });
   S.draw("M-14 -66 Q0 -54 14 -66", s0, 0, { c: LN("red"), w: DS.w.mid, parent: bob });
+  blinks(S, bob, [[-18, -92, 12, 14], [18, -92, 12, 14]], "yellow", x, DS.w.detail);
   [[0, -150], [64, -104], [40, -30], [-40, -30], [-64, -104]].forEach(([dx, dy]) => S.fill(circ(dx, dy, 6), s0, 0, DS.c("orange", 1), 0.9, bob));
   toyFx(pos, 7); if ((o.t ?? s0) > s0 + 0.05) { fadeIn(S, pos, o.t); fadeIn(S, sh, o.t); }
   return { pos, bob, dance: (t0, t1) => tw(bob, t0, t1 - t0, "rotate(0 0 -80)", "rotate(10 0 -80)", wave(cyc(t1 - t0, 2 * BEAT))) };
@@ -176,6 +210,7 @@ const turtle = (S, x, gy, k = 1, o = {}) => {
   toon(S, circ(128, -84, 44, 40), "grass", { t: s0, parent: bob });
   toon(S, circ(142, -94, 12), "white", { t: s0, parent: bob, flat: true, w: "detail" }); S.fill(circ(145, -92, 7), s0, 0, DS.P.ink[0], 1, bob);
   S.draw("M124 -66 Q138 -56 154 -68", s0, 0, { c: LN("red"), w: DS.w.mid, parent: bob });
+  blinks(S, bob, [[142, -94, 12, 12]], "grass", x, DS.w.detail);
   toon(S, "M-128 -34 C-128 -166 128 -166 128 -34 Z", "green", { t: s0, parent: bob });
   S.draw(poly(Array.from({ length: 7 }, (_, i) => [Math.cos((i * Math.PI) / 3) * 34, -92 + Math.sin((i * Math.PI) / 3) * 30])), s0, 0, { c: DS.c("green", 2), w: DS.w.mid, parent: bob });
   toon(S, rrect(-136, -42, 272, 24, DS.r.sm), "sand", { t: s0, parent: bob, w: "mid" });
@@ -268,6 +303,7 @@ const bibiFace = (S, x, y, k, mood, g) => {
     else { S.fill(circ(x + s * 46 * k, y - 6 * k, 20 * k, 26 * k), S.start, 0, DS.c("ink"), 1, g); S.fill(circ(x + s * 46 * k + 7 * k, y - 15 * k, 7 * k), S.start, 0, DS.P.white[0], 1, g); }
     S.fill(circ(x + s * 82 * k, y + 30 * k, 22 * k, 14 * k), S.start, 0, DS.c("red", 1), 0.45, g);
   });
+  if (mood !== "joy") blinks(S, g, [-1, 1].map((s) => [x + s * 46 * k, y - 6 * k, 20 * k, 26 * k]), "pink", x, DS.w.near * k);
   S.fill(circ(x, y + 24 * k, 12 * k, 9 * k), S.start, 0, DS.c("pink", 2), 1, g);
   S.draw(`M${K(x - 30 * k)} ${K(y + 46 * k)} Q${K(x)} ${K(y + 104 * k)} ${K(x + 30 * k)} ${K(y + 46 * k)} Z`, S.start, 0, { fill: DS.c("red", 2), c: LN("red"), w: DS.w.detail, parent: g });
   S.fill(circ(x, y + 64 * k, 13 * k, 7 * k), S.start, 0, DS.c("pink", 1), 1, g);
@@ -327,6 +363,7 @@ const puppy = (S, x, gy, k = 1, o = {}) => {
   S.fill(circ(-30, -214, 26, 12), s0, 0, DS.P.white[0], 0.55, bob);
   toon(S, circ(0, -150, 40, 30), "white", { t: s0, parent: bob, flat: true, w: "mid" });
   [-1, 1].forEach((s) => { toon(S, circ(s * 30, -190, 17), "white", { t: s0, parent: bob, flat: true, w: "detail" }); S.fill(circ(s * 30 + 2, -187, 9), s0, 0, DS.P.ink[0], 1, bob); S.fill(circ(s * 30 - 2, -192, 3), s0, 0, DS.P.white[0], 1, bob); });
+  blinks(S, bob, [[-30, -190, 17, 17], [30, -190, 17, 17]], "wood", x, DS.w.mid);
   S.fill(circ(0, -164, 14, 9), s0, 0, DS.P.ink[0], 1, bob);
   S.draw("M-20 -146 Q0 -130 20 -146", s0, 0, { c: LN("red"), w: DS.w.mid, parent: bob });
   S.fill(circ(0, -134, 10, 14), s0, 0, DS.c("red", 1), 1, bob);
@@ -337,3 +374,161 @@ const puppy = (S, x, gy, k = 1, o = {}) => {
 };
 // a cartoon bone centred on (0, 0): put it inside your own group
 const bone = (S, parent, k = 1) => toon(S, cap(-50 * k, 0, 50 * k, 0, 16 * k) + " " + [[-62, -14], [-62, 14], [62, -14], [62, 14]].map(([a, b]) => circ(a * k, b * k, 17 * k)).join(" "), "white", { parent, lw: DS.w.mid * 2.5 });
+
+// ---------- Faith-trial kids (2026-10-30): human toddlers for the faith songs. NO Ollie in sacred scenes. Same soft toon look as Bibi ----------
+// kidKufi / kidHijab (Islamic songs), kidTilak / kidBindi (Hindu songs). x = centre, hy = head centre y; o: { k, mood: "joy", pose: "wave" | "together" }.
+// Toddler build: big head, small round body, little arms with mitten hands (thumb + finger lines), short legs with shoes. Returns { g, k, x, hy }.
+DS.P.skinA = ["#e0aa72", "#efc99a", "#b98450"]; DS.P.skinB = ["#b9794a", "#d29a6c", "#8e5a33"]; DS.P.skinC = ["#c98d5a", "#e0ad82", "#9d6a3c"]; DS.P.hairD = ["#3b2a22", "#5a4136", "#241912"];
+const kidFace = (S, x, y, k, g, skin, mood) => {
+  [-1, 1].forEach((s) => {
+    if (mood === "joy") S.draw(arc(x + s * 48 * k, y + 8 * k, 24 * k, 200, 340), S.start, 0, { c: LN("hairD"), w: DS.w.near * 1.2, parent: g });
+    else { S.fill(circ(x + s * 48 * k, y + 4 * k, 25 * k, 33 * k), S.start, 0, DS.c("hairD", 2), 1, g); S.fill(circ(x + s * 48 * k + 9 * k, y - 8 * k, 10 * k), S.start, 0, DS.P.white[0], 1, g); S.fill(circ(x + s * 48 * k - 8 * k, y + 16 * k, 5 * k), S.start, 0, DS.P.white[0], 0.85, g); }
+    S.fill(circ(x + s * 88 * k, y + 46 * k, 23 * k, 14 * k), S.start, 0, DS.c("red", 1), 0.42, g);
+  });
+  if (mood !== "joy") blinks(S, g, [-1, 1].map((s) => [x + s * 48 * k, y + 4 * k, 25 * k, 33 * k]), skin, x, DS.w.near * k);
+  S.fill(circ(x, y + 38 * k, 9 * k, 7 * k), S.start, 0, DS.c(skin, 2), 1, g);
+  S.draw(`M${K(x - 28 * k)} ${K(y + 60 * k)} Q${K(x)} ${K(y + 110 * k)} ${K(x + 28 * k)} ${K(y + 60 * k)} Z`, S.start, 0, { fill: DS.c("red", 2), c: LN("red"), w: DS.w.detail, parent: g });
+  S.fill(circ(x, y + 82 * k, 12 * k, 6 * k), S.start, 0, DS.c("pink", 1), 1, g);
+};
+const kidHand = (S, g, hx, hy, k, skin, side) => { // mitten hand: palm + thumb + three finger lines
+  toon(S, circ(hx + side * 26 * k, hy + 4 * k, 15 * k, 20 * k), skin, { parent: g, lw: DS.w.mid * 2.4 * k });
+  toon(S, circ(hx, hy, 33 * k, 31 * k), skin, { parent: g, lw: DS.w.mid * 2.5 * k });
+  [-1, 0, 1].forEach((i) => S.draw(`M${K(hx + i * 11 * k)} ${K(hy - 6 * k)} V${K(hy - 24 * k)}`, S.start, 0, { c: LN(skin), w: DS.w.detail * k, parent: g }));
+};
+// o: { k, mood, pose, skin, cloth, shoe, hijab (hijab colour, covers hair + shoulders), back / mid / front (g, x, hy, k) = hooks behind the head / over the body / on top of the head }
+const kidTot = (S, x, hy, o = {}) => {
+  const k = o.k || 1, g = S.grp(), skin = o.skin || "skinA", cloth = o.cloth || "green", HC = hy + 16 * k, wave = (o.pose || "wave") === "wave";
+  [-1, 1].forEach((s) => { toon(S, cap(x + s * 42 * k, hy + 300 * k, x + s * 46 * k, hy + 348 * k, 29 * k), skin, { parent: g, lw: DS.w.mid * 2.5 * k }); toon(S, circ(x + s * 52 * k, hy + 368 * k, 44 * k, 24 * k), o.shoe || "red", { parent: g, lw: DS.w.mid * 2.5 * k }); });
+  o.back && o.back(g, x, hy, k);
+  toon(S, circ(x, hy + 222 * k, 96 * k, 94 * k), cloth, { parent: g });
+  S.fill(circ(x - 36 * k, hy + 186 * k, 28 * k, 13 * k), S.start, 0, DS.P.white[0], 0.35, g);
+  o.mid && o.mid(g, x, hy, k);
+  if (o.hijab) { // hijab: head + shoulder drape in one shape, the face shows through an oval
+    toon(S, `M${K(x - 150 * k)} ${K(hy + 20 * k)} Q${K(x - 186 * k)} ${K(hy + 170 * k)} ${K(x - 110 * k)} ${K(hy + 240 * k)} Q${K(x)} ${K(hy + 276 * k)} ${K(x + 110 * k)} ${K(hy + 240 * k)} Q${K(x + 186 * k)} ${K(hy + 170 * k)} ${K(x + 150 * k)} ${K(hy + 20 * k)} ` + circ(x, hy - 8 * k, 152 * k, 146 * k), o.hijab, { parent: g, lw: LW * k });
+    S.fill(circ(x - 70 * k, hy - 80 * k, 44 * k, 20 * k), S.start, 0, DS.P.white[0], 0.4, g);
+    toon(S, circ(x, HC, 108 * k, 112 * k), skin, { parent: g, lw: DS.w.mid * 2.8 * k });
+  } else { toon(S, circ(x, hy, 136 * k, 124 * k), skin, { parent: g }); S.fill(circ(x - 58 * k, hy - 68 * k, 34 * k, 15 * k), S.start, 0, DS.P.white[0], 0.45, g); }
+  kidFace(S, x, o.hijab ? HC : hy + 22 * k, k, g, skin, o.mood);
+  o.front && o.front(g, x, hy, k);
+  const arm = (a, b) => toon(S, cap(a[0], a[1], b[0], b[1], 27 * k), cloth, { parent: g, lw: DS.w.mid * 2.5 * k });
+  const sh = (s) => [x + s * 82 * k, hy + 186 * k];
+  if (wave) { arm(sh(1), [x + 168 * k, hy + 92 * k]); kidHand(S, g, x + 174 * k, hy + 66 * k, k, skin, 1); arm(sh(-1), [x - 128 * k, hy + 274 * k]); kidHand(S, g, x - 134 * k, hy + 296 * k, k, skin, -1); }
+  else { arm(sh(-1), [x - 24 * k, hy + 252 * k]); arm(sh(1), [x + 24 * k, hy + 252 * k]); kidHand(S, g, x - 14 * k, hy + 262 * k, k, skin, -1); kidHand(S, g, x + 14 * k, hy + 262 * k, k, skin, 1); }
+  toyFx(g, 9 * k);
+  return { g, k, x, hy };
+};
+const hairCap = (S, g, x, hy, k, dy = -84) => { toon(S, circ(x, hy + dy * k, 136 * k, 56 * k), "hairD", { parent: g, flat: true, lw: DS.w.mid * 2.8 * k }); S.fill(circ(x - 52 * k, hy + (dy - 20) * k, 30 * k, 11 * k), S.start, 0, DS.P.white[0], 0.3, g); };
+
+// boy in a white kufi (topi), green thobe
+const kidKufi = (S, x, hy, o = {}) => kidTot(S, x, hy, Object.assign({ skin: "skinA", cloth: "green", shoe: "brown",
+  mid: (g, x, hy, k) => S.draw(`M${K(x - 40 * k)} ${K(hy + 140 * k)} Q${K(x)} ${K(hy + 184 * k)} ${K(x + 40 * k)} ${K(hy + 140 * k)}`, S.start, 0, { c: DS.P.white[0], w: DS.w.near * k, parent: g }),
+  front: (g, x, hy, k) => {
+    toon(S, circ(x, hy - 54 * k, 126 * k, 30 * k), "hairD", { parent: g, flat: true, lw: DS.w.mid * 2.5 * k });
+    toon(S, `M${K(x - 104 * k)} ${K(hy - 70 * k)} Q${K(x - 110 * k)} ${K(hy - 158 * k)} ${K(x)} ${K(hy - 164 * k)} Q${K(x + 110 * k)} ${K(hy - 158 * k)} ${K(x + 104 * k)} ${K(hy - 70 * k)} Q${K(x)} ${K(hy - 44 * k)} ${K(x - 104 * k)} ${K(hy - 70 * k)} Z`, "white", { parent: g, lw: DS.w.mid * 3 * k });
+    for (let i = -2; i <= 2; i++) toon(S, circ(x + i * 36 * k, hy - 80 * k + Math.abs(i) * 7 * k, 9 * k), "gold", { parent: g, flat: true, lw: DS.w.detail * 2 * k });
+    twinkle(S, x + 40 * k, hy - 126 * k, 14 * k, g); } }, o));
+
+// girl in a simple purple hijab, pink dress
+const kidHijab = (S, x, hy, o = {}) => kidTot(S, x, hy, Object.assign({ skin: "skinB", cloth: "pink", hijab: "purple", shoe: "purple", pose: "together",
+  front: (g, x, hy, k) => twinkle(S, x + 82 * k, hy - 124 * k, 15 * k, g) }, o));
+
+// boy with a red tilak (kumkum) on the forehead and a small brown wooden-bead (tulsi/rudraksha) mala, yellow kurta
+const kidTilak = (S, x, hy, o = {}) => kidTot(S, x, hy, Object.assign({ skin: "skinC", cloth: "yellow", shoe: "orange", pose: "together",
+  mid: (g, x, hy, k) => { const n = 9; for (let i = 0; i < n; i++) { const a = Math.PI * (0.12 + 0.76 * i / (n - 1)); toon(S, circ(x - Math.cos(a) * 70 * k, hy + 138 * k + Math.sin(a) * 50 * k, 11 * k), "brown", { parent: g, flat: true, tone: 1, lw: DS.w.detail * 2 * k }); } },
+  front: (g, x, hy, k) => { hairCap(S, g, x, hy, k); S.draw(`M${K(x)} ${K(hy - 22 * k)} V${K(hy - 2 * k)}`, S.start, 0, { c: DS.c("red", 0), w: DS.w.near * 1.6 * k, parent: g }); twinkle(S, x + 84 * k, hy - 126 * k, 14 * k, g); } }, o));
+
+// girl with a red bindi and a flower in her hair, two plaits, orange dress with gold trim
+const kidBindi = (S, x, hy, o = {}) => kidTot(S, x, hy, Object.assign({ skin: "skinA", cloth: "orange", shoe: "pink",
+  back: (g, x, hy, k) => [-1, 1].forEach((s) => { toon(S, circ(x + s * 146 * k, hy + 96 * k, 34 * k, 74 * k), "hairD", { parent: g, flat: true, lw: DS.w.mid * 2.5 * k }); toon(S, circ(x + s * 146 * k, hy + 40 * k, 16 * k), "pink", { parent: g, flat: true, lw: DS.w.detail * 2 * k }); }),
+  mid: (g, x, hy, k) => S.draw(`M${K(x - 88 * k)} ${K(hy + 286 * k)} Q${K(x)} ${K(hy + 314 * k)} ${K(x + 88 * k)} ${K(hy + 286 * k)}`, S.start, 0, { c: DS.c("gold", 0), w: DS.w.near * 1.5 * k, parent: g }),
+  front: (g, x, hy, k) => { hairCap(S, g, x, hy, k);
+    S.fill(circ(x, hy - 10 * k, 8 * k), S.start, 0, DS.c("red", 0), 1, g);
+    const fx = x + 84 * k, fy = hy - 116 * k; [0, 1, 2, 3, 4].forEach((i) => { const a = (i * 72 - 90) * Math.PI / 180; toon(S, circ(fx + Math.cos(a) * 24 * k, fy + Math.sin(a) * 24 * k, 20 * k), "pink", { parent: g, flat: true, tone: 0, lw: DS.w.detail * 2 * k }); });
+    toon(S, circ(fx, fy, 15 * k), "yellow", { parent: g, flat: true, lw: DS.w.detail * 2 * k }); } }, o));
+
+// ---------- Ganesha (respectful soft toon): four arms (lotus, blessing hand, modak, modak), broken tusk (his right = our left), whole tusk, trunk curling to one side, lotus seat, small mouse. Origin = ground centre ----------
+// Never comic: calm eyes, gentle smile. Returns { pos, bob }.
+const ganesha = (S, x, gy, k = 1, o = {}) => {
+  const sh = DS.shadow(S, x, gy, 440 * k), pos = G(S, null, `translate(${x} ${gy}) scale(${k})`), g = G(S, pos, "translate(0 0)"), nm = "orange";
+  const EAR = (s) => circ(s * 170, -420, 82, 104), TUM = circ(0, -190, 160, 150), HEAD = circ(0, -400, 130, 120), LEG = (s) => circ(s * 112, -44, 104, 48);
+  const A = { ur: [[136, -240], [262, -300], [276, -322]], ul: [[-136, -240], [-262, -300], [-276, -322]], lr: [[140, -200], [214, -160], [222, -156]], ll: [[-140, -200], [-206, -170], [-214, -166]] };
+  const ARMS = Object.values(A).map(([a, b, h]) => cap(a[0], a[1], b[0], b[1], 30) + " " + circ(h[0], h[1], 38)).join(" ");
+  // mouse (his vehicle) at his feet, front right
+  const mouse = G(S, g, "translate(270 -6)");
+  toon(S, "M-52 -26 Q-96 -30 -108 -64 Q-96 -48 -58 -44", "gray", { parent: mouse, lw: DS.w.mid * 1.6, flat: true });
+  toon(S, circ(0, -30, 56, 32), "gray", { parent: mouse, lw: DS.w.mid * 2.4 });
+  toon(S, circ(40, -42, 28, 24), "gray", { parent: mouse, lw: DS.w.mid * 2.4 });
+  toon(S, circ(30, -66, 14, 16), "pink", { parent: mouse, lw: DS.w.detail * 2, flat: true });
+  S.fill(circ(52, -44, 5), S.start, 0, DS.c("hairD", 2), 1, mouse); S.fill(circ(68, -36, 5), S.start, 0, DS.c("pink", 2), 1, mouse);
+  // lotus seat
+  [-2, -1, 0, 1, 2].forEach((i) => toon(S, `M${i * 90} 8 Q${i * 90 - 56} -28 ${i * 90} -70 Q${i * 90 + 56} -28 ${i * 90} 8 Z`, "pink", { parent: g, lw: DS.w.mid * 2.4 }));
+  toonBack(S, [EAR(-1), EAR(1), TUM, HEAD, LEG(-1), LEG(1), ARMS].join(" "), nm, g);
+  [-1, 1].forEach((s) => { toonFill(S, EAR(s), nm, g); S.fill(circ(s * 172, -418, 50, 72), S.start, 0, DS.c("pink", 0), 0.7, g); });
+  toonFill(S, ARMS, nm, g);
+  [-1, 1].forEach((s) => toonFill(S, LEG(s), nm, g)); toonFill(S, TUM, nm, g);
+  S.draw(`M-152 -128 Q0 -60 152 -128 Q150 -62 90 -38 Q0 -10 -90 -38 Q-150 -62 -152 -128 Z`, S.start, 0, { fill: DS.c("red", 0), c: LN("red"), w: DS.w.mid, parent: g });
+  S.draw("M-100 -300 Q-10 -230 80 -130", S.start, 0, { c: DS.c("gold", 0), w: DS.w.near * 1.4, parent: g });
+  S.fill(circ(0, -176, 22, 16), S.start, 0, DS.c(nm, 2), 0.6, g);
+  toonFill(S, HEAD, nm, g);
+  S.fill(circ(-54, -466, 40, 16), S.start, 0, DS.P.white[0], 0.45, g);
+  // crown
+  toon(S, `M-96 -488 L-80 -566 Q-40 -546 -20 -606 L0 -648 L20 -606 Q40 -546 80 -566 L96 -488 Q0 -456 -96 -488 Z`, "gold", { parent: g, lw: DS.w.mid * 2.6 });
+  [-50, 0, 50].forEach((cx) => toon(S, circ(cx, -510 - (cx === 0 ? 18 : 0), 11), "red", { parent: g, flat: true, lw: DS.w.detail * 2 }));
+  // tusks (attached at the mouth, behind the trunk): whole on our right, broken stub on our left
+  toon(S, "M50 -350 Q80 -346 92 -312 Q96 -292 86 -290 Q76 -304 56 -318 Z", "white", { parent: g, flat: true, lw: DS.w.mid * 2 });
+  toon(S, "M-52 -352 Q-72 -340 -78 -318 Q-72 -312 -62 -318 L-44 -330 Z", "white", { parent: g, flat: true, lw: DS.w.mid * 2 });
+  // trunk: one smooth curve that curls up to our left
+  toon(S, tube([[0, -392], [-2, -330], [-28, -270], [-84, -240], [-130, -262], [-138, -304]], 46, 22).d, nm, { parent: g, lw: DS.w.mid * 2.8 }); toonFill(S, circ(0, -384, 44, 34), nm, g);
+  [-1, 1].forEach((s) => { S.fill(circ(s * 58, -424, 15, 20), S.start, 0, DS.c("hairD", 2), 1, g); S.fill(circ(s * 58 + 5, -431, 5.5), S.start, 0, DS.P.white[0], 1, g); S.fill(circ(s * 98, -374, 24, 15), S.start, 0, DS.c("red", 1), 0.35, g); });
+  S.draw("M-30 -318 Q-52 -312 -66 -326", S.start, 0, { c: LN("hairD"), w: DS.w.detail, parent: g }); // gentle smile at the trunk base
+  S.draw("M0 -466 V-436", S.start, 0, { c: DS.c("red", 0), w: DS.w.near * 1.5, parent: g });
+  // hands: upper-left lotus, upper-right blessing palm, lower-left modak bowl, lower-right modak
+  const modak = (mx, my, p) => toon(S, `M${mx} ${my} Q${mx - 20} ${my} ${mx - 13} ${my - 28} Q${mx} ${my - 58} ${mx + 13} ${my - 28} Q${mx + 20} ${my} ${mx} ${my} Z`, "yellow", { parent: p, lw: DS.w.detail * 2.2 });
+  [-1, 0, 1].forEach((i) => toon(S, `M${-276 + i * 34} -356 Q${-276 + i * 56} -416 ${-276 + i * 14} -448 Q${-276 - 16 + i * 14} -410 ${-276 + i * 34} -356 Z`, "pink", { parent: g, lw: DS.w.detail * 2.2 }));
+  S.draw("M-276 -350 V-296", S.start, 0, { c: DS.c("green", 1), w: DS.w.near, parent: g });
+  [-14, 0, 14].forEach((dx) => S.draw(`M${276 + dx} -336 V-356`, S.start, 0, { c: LN(nm), w: DS.w.detail, parent: g }));
+  S.fill(circ(276, -322, 14, 10), S.start, 0, DS.c("red", 0), 0.8, g);
+  toon(S, `M-258 -160 Q-214 -96 -170 -160 Z`, "gold", { parent: g, lw: DS.w.mid * 2.2 }); modak(-232, -160, g); modak(-196, -160, g);
+  modak(222, -168, g);
+  toyFx(pos, 8); if (o.t > (S.start || 0) + 0.05) { fadeIn(S, pos, o.t); fadeIn(S, sh, o.t); }
+  return { pos, bob: g };
+};
+
+// ---------- TOON 2 depth + light helpers (2026-11 animated-shorts study, inside the calm rules: no cuts, no flashes, slow moves) ----------
+// dof(S, layer, t, px, dur): lens blur on a BACKGROUND group (DS.outdoor(S).g, a room group) that eases in with a push-in and
+// back out (px = 0) with the return to wide. ~5 px for a medium, 8-10 px for a face close-up; wides stay sharp. Faces never blur.
+let DOFN = 0;
+const dof = (S, layer, t, px, dur = 1.3) => {
+  if (!layer.dofFe) { const id = "ttt-dof" + ++DOFN, f = el("filter", { id, x: "-5%", y: "-5%", width: "110%", height: "110%" }, dsDefs());
+    layer.dofFe = el("feGaussianBlur", { stdDeviation: 0.001 }, f); layer.dofPx = 0.001; layer.setAttribute("filter", `url(#${id})`); }
+  px = Math.max(px, 0.001); tl.fromTo(layer.dofFe, { attr: { stdDeviation: layer.dofPx } }, { attr: { stdDeviation: px }, duration: dur, ease: "power2.inOut", immediateRender: false }, t); layer.dofPx = px;
+};
+// fgFrame(S, x, gy, k, o): a big out-of-focus foreground plant (leaf fan + one flower) framing an edge, for depth in ~1/3 of shots.
+// Base below the frame (gy >= 1100), x < 220 or > 1700; it sways slowly. Keep it off faces and the caption text. o: { leaf, flower, blur, flip }
+const fgFrame = (S, x, gy, k = 1, o = {}) => {
+  const g = G(S, null, `rotate(0 ${x} ${gy})`), f = o.flip ? -1 : 1, lc = o.leaf || "green";
+  const leaf = (a, L, w) => { const r = a * Math.PI / 180, tx = x + Math.sin(r) * L, ty = gy - Math.cos(r) * L, mx = (x + tx) / 2, my = (gy + ty) / 2, px = Math.cos(r) * w, py = Math.sin(r) * w;
+    S.fill(`M${K(x)} ${K(gy)} Q${K(mx + px)} ${K(my + py)} ${K(tx)} ${K(ty)} Q${K(mx - px)} ${K(my - py)} ${K(x)} ${K(gy)} Z`, S.start, 0, VOL(lc), 1, g); };
+  [[-34, 520, 70], [-8, 640, 84], [22, 560, 74], [48, 430, 62]].forEach(([a, L, w]) => leaf(a * f, L * k, w * k));
+  if (o.flower !== false) { const fx = x + 120 * f * k, fy = gy - 600 * k, fc = o.flower || "pink";
+    S.draw(`M${K(x + 30 * f * k)} ${K(gy)} Q${K(x + 70 * f * k)} ${K(gy - 300 * k)} ${K(fx)} ${K(fy)}`, S.start, 0, { c: DS.c(lc, 2), w: DS.w.near * 2 * k, parent: g });
+    [0, 1, 2, 3, 4].forEach((i) => { const a = (i * 72 - 90) * Math.PI / 180; S.fill(circ(fx + Math.cos(a) * 52 * k, fy + Math.sin(a) * 52 * k, 44 * k), S.start, 0, DS.c(fc, 0), 1, g); });
+    S.fill(circ(fx, fy, 34 * k), S.start, 0, DS.c("yellow", 0), 1, g); }
+  S.blur(g, o.blur ?? 7);
+  tw(g, S.start, S.len, `rotate(0 ${x} ${gy})`, `rotate(${3 * f} ${x} ${gy})`, wave(cyc(S.len, 6)));
+  return g;
+};
+// grade(S, [sx, sy]): screen-space light, called last (after DS.vignette): a warm soft-light glow from the sun side and a faint cool
+// tint on the far side, so the lit side reads warm and the shade side cool (the study's two-tone light) without darkening faces.
+const grade = (S, sun = [1560, 170], k = 1) => {
+  const g0 = S.g.parentNode, [sx, sy] = sun, id = "ttt-gr" + ++DSN, id2 = id + "c";
+  const a = el("radialGradient", { id, gradientUnits: "userSpaceOnUse", cx: sx, cy: sy, r: 1500 }, dsDefs());
+  [[0, 0.5 * k], [0.55, 0.2 * k], [1, 0]].forEach(([o, op]) => el("stop", { offset: o, "stop-color": "#ffe9b0", "stop-opacity": op }, a));
+  const b = el("radialGradient", { id: id2, gradientUnits: "userSpaceOnUse", cx: 1920 - sx, cy: 1180, r: 1100 }, dsDefs());
+  [[0, 0.12 * k], [1, 0]].forEach(([o, op]) => el("stop", { offset: o, "stop-color": "#5a58c8", "stop-opacity": op }, b));
+  el("path", { d: "M-200 -200 H2120 V1280 H-200 Z", fill: `url(#${id})`, style: "mix-blend-mode: soft-light", "pointer-events": "none" }, g0);
+  el("path", { d: "M-200 -200 H2120 V1280 H-200 Z", fill: `url(#${id2})`, "pointer-events": "none" }, g0);
+};
+
+// scenery tints used by the faith-trial scenes (palette entries: PS.c<hex>)
+const PS = {c0f2a3a: "#0f2a3a", c10183d: "#10183d", c164236: "#164236", c17214a: "#17214a", c1a2a55: "#1a2a55", c1b1d4a: "#1b1d4a", c1f3552: "#1f3552", c1f5a3a: "#1f5a3a", c1f5a4a: "#1f5a4a", c1f5fb0: "#1f5fb0", c25396b: "#25396b", c2a2a5e: "#2a2a5e", c2b3c7a: "#2b3c7a", c2c3a78: "#2c3a78", c2c4a6e: "#2c4a6e", c2f6a62: "#2f6a62", c2f6fd6: "#2f6fd6", c2f8fd6: "#2f8fd6", c3d2760: "#3d2760", c3f5aa6: "#3f5aa6", c3f9e4a: "#3f9e4a", c4a2f6b: "#4a2f6b", c4aa0cf: "#4aa0cf", c5aa860: "#5aa860", c5e3b85: "#5e3b85", c6b3d00: "#6b3d00", c6b4a8a: "#6b4a8a", c7893b8: "#7893b8", c7cc9e8: "#7cc9e8", c7ccdf0: "#7ccdf0", c8aa6c9: "#8aa6c9", c8e5bb5: "#8e5bb5", ca86d3f: "#a86d3f", ca9dcf5: "#a9dcf5", cb0603a: "#b0603a", cbdeaff: "#bdeaff", cbfe3f7: "#bfe3f7", cc98a55: "#c98a55", cd06a00: "#d06a00", cd9f3ff: "#d9f3ff", ce5383b: "#e5383b", ce8f7ff: "#e8f7ff", cf4fbff: "#f4fbff", cff8c1a: "#ff8c1a", cffc58a: "#ffc58a", cffcf33: "#ffcf33", cffcf9a: "#ffcf9a", cffdd88: "#ffdd88", cffe27a: "#ffe27a", cffe66d: "#ffe66d"};
