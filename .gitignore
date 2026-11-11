@@ -16,4 +16,3 @@ __pycache__/
 **/*.nobadge.png
 # demucs stems (regenerable by tools/remix.py)
 **/assets/stems/
-config.bat

@@ -1,6 +1,4 @@
 # align each chunk's whisper words to the target lines; prints/returns line start/end times. usage: align.py chunk seed
-import utils.transport
-import utils.session
 import json, re, sys, difflib
 def norm(s): return re.sub(r"[^a-z]", "", s.lower().replace("'", ""))
 def align(chunk, seed, lines):
